@@ -1,6 +1,7 @@
 # Skill - .NET MAUI
 
-Mejores prácticas y convenciones para proyectos .NET, con especialización en .NET MAUI.
+> **Versión:** V.0.1  
+> Conjunto de reglas, mejores prácticas y convenciones para proyectos .NET, con especialización en .NET MAUI.
 
 ---
 
