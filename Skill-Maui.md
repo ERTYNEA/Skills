@@ -489,6 +489,34 @@ Después de todas las propiedades se escriben los **métodos**. Se ordenan por n
     }
 ```
 
+### 11. Sufijo `Async` en métodos asíncronos
+
+Los métodos `async` deben tener siempre el sufijo **`Async`** al final de su nombre.
+
+```csharp
+// Correct
+public async Task LoadDataAsync()
+{
+    // ...
+}
+
+private async Task<bool> ValidateInputAsync()
+{
+    // ...
+}
+
+// Incorrect (missing Async suffix)
+public async Task LoadData()
+{
+    // ...
+}
+
+private async Task<bool> ValidateInput()
+{
+    // ...
+}
+```
+
 ### Ejemplo completo
 
 ```csharp
