@@ -16,7 +16,7 @@ Todo el código debe escribirse **siempre en inglés**: nombres de clases, propi
 |-----------------------------------------------|------------------|----------------------------|
 | **Constantes**                                | `UPPER_CASE`     | `MAX_RETRY_COUNT`          |
 | **Propiedades y métodos** (clases y XAML)     | `PascalCase`     | `UserName`, `GetUserData`  |
-| **Variables** (`var`, parámetros, campos, etc.) | `camelCase`      | `userName`, `retryCount`   |
+| **Variables** (`var`, parámetros, campos, etc.) | `camelCase`      | `userName`, `retryCount` (sin prefijo `_`) |
 
 ---
 
@@ -348,3 +348,227 @@ public partial class UserProfilePage : ContentPage
     // ...
 }
 ```
+
+### 4. Orden del contenido de una clase
+
+El contenido de una clase se organiza en el siguiente orden:
+
+1. **Propiedades de interfaces**
+2. **Constructor**
+3. **Destructor** (si existe)
+4. **Propiedades Reactive**
+5. **Propiedades ReactiveCommand**
+6. **Resto de propiedades**
+7. **Métodos**
+
+Todas las secciones de propiedades y métodos siguen la misma regla de ordenación: se agrupan por **nivel de acceso** (de menos restrictivo a más restrictivo: `public` → `internal` → `protected internal` → `protected` → `private`) y dentro de cada grupo se ordenan **alfabéticamente**. Las propiedades y métodos no utilizados **deben eliminarse**.
+
+### 5. Propiedades de interfaces
+
+Son las primeras que se escriben en la clase. Se declaran al inicio, antes del constructor.
+
+```csharp
+public partial class UserProfilePage : ContentPage
+{
+    public IAuthService AuthService { get; set; }
+    public INavigationService NavigationService { get; set; }
+
+    private ILoggerService loggerService;
+
+    // ...
+}
+```
+
+### 6. Constructor
+
+Va inmediatamente después de las propiedades de interfaces. Lo primero que hace el constructor es **inicializar las propiedades de interfaces**, en el **mismo orden en el que fueron declaradas**.
+
+```csharp
+public partial class UserProfilePage : ContentPage
+{
+    public IAuthService AuthService { get; set; }
+    public INavigationService NavigationService { get; set; }
+
+    private ILoggerService loggerService;
+
+    public UserProfilePage(
+        IAuthService authService,
+        INavigationService navigationService,
+        ILoggerService loggerService)
+    {
+        AuthService = authService;
+        NavigationService = navigationService;
+        this.loggerService = loggerService;
+
+        // ... other initialization
+    }
+
+    // ...
+}
+```
+
+### 7. Destructor
+
+Si la clase tiene destructor, este se escribe **inmediatamente después del constructor**.
+
+```csharp
+    public UserProfilePage(ILoggerService loggerService)
+    {
+        this.loggerService = loggerService;
+    }
+
+    ~UserProfilePage()
+    {
+        // ... cleanup
+    }
+
+    // ...
+```
+
+### 8. Propiedades Reactive y ReactiveCommand
+
+Después del destructor (o del constructor si no hay destructor) se escriben las propiedades **Reactive**, seguidas de las propiedades **ReactiveCommand**. Ambos grupos se ordenan por nivel de acceso y alfabéticamente. Los atributos como `[Reactive]` se escriben en una **línea separada**, encima de la propiedad a la que afectan.
+
+```csharp
+    // Reactive properties
+    [Reactive]
+    public string Email { get; set; }
+    [Reactive]
+    public string UserName { get; set; }
+
+    [Reactive]
+    private bool isEditing;
+
+    // ReactiveCommand properties
+    public ReactiveCommand<Unit, Unit> LoadCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> SaveCommand { get; set; }
+
+    private ReactiveCommand<Unit, Unit> validateCommand;
+```
+
+### 9. Resto de propiedades
+
+Por último se escriben el resto de propiedades que no encajan en las categorías anteriores, siguiendo la misma ordenación por nivel de acceso y alfabéticamente.
+
+```csharp
+    public string Title { get; set; }
+
+    protected int PageIndex { get; set; }
+
+    private bool isLoading;
+```
+
+### 10. Métodos
+
+Después de todas las propiedades se escriben los **métodos**. Se ordenan por nivel de acceso (de menos restrictivo a más restrictivo) y **alfabéticamente** dentro de cada grupo.
+
+```csharp
+    public void LoadData()
+    {
+        // ...
+    }
+
+    public void SaveData()
+    {
+        // ...
+    }
+
+    protected void OnPropertyChanged()
+    {
+        // ...
+    }
+
+    private void InitializeComponents()
+    {
+        // ...
+    }
+
+    private void ValidateInput()
+    {
+        // ...
+    }
+```
+
+### Ejemplo completo
+
+```csharp
+// File: UserProfilePage.cs
+namespace App.UI.Features;
+
+using App.Core.Interfaces;
+using App.Core.Models;
+using ReactiveUI;
+
+public partial class UserProfilePage : ContentPage
+{
+    // Interface properties
+    public IAuthService AuthService { get; set; }
+    public INavigationService NavigationService { get; set; }
+
+    private ILoggerService loggerService;
+
+    // Constructor
+    public UserProfilePage(
+        IAuthService authService,
+        INavigationService navigationService,
+        ILoggerService loggerService)
+    {
+        AuthService = authService;
+        NavigationService = navigationService;
+        this.loggerService = loggerService;
+    }
+
+    // Destructor
+    ~UserProfilePage()
+    {
+        // ... cleanup
+    }
+
+    // Reactive properties
+    [Reactive]
+    public string Email { get; set; }
+    [Reactive]
+    public string UserName { get; set; }
+
+    [Reactive]
+    private bool isEditing;
+
+    // ReactiveCommand properties
+    public ReactiveCommand<Unit, Unit> LoadCommand { get; set; }
+    public ReactiveCommand<Unit, Unit> SaveCommand { get; set; }
+
+    // Other properties
+    public string Title { get; set; }
+
+    protected int PageIndex { get; set; }
+
+    private bool isLoading;
+
+    // Methods
+    public void LoadData()
+    {
+        // ...
+    }
+
+    public void SaveData()
+    {
+        // ...
+    }
+
+    protected void OnPropertyChanged()
+    {
+        // ...
+    }
+
+    private void InitializeComponents()
+    {
+        // ...
+    }
+
+    private void ValidateInput()
+    {
+        // ...
+    }
+}
+```
+
