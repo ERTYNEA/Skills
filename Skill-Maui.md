@@ -4,6 +4,14 @@ Mejores prácticas y convenciones para proyectos .NET, con especialización en .
 
 ---
 
+## Reglas globales
+
+### Comentarios en inglés
+
+Todos los comentarios del código deben escribirse **siempre en inglés**, independientemente del tipo de archivo o del idioma del proyecto.
+
+---
+
 ## Archivos XAML
 
 ### 1. Eliminar la declaración XML
@@ -11,7 +19,7 @@ Mejores prácticas y convenciones para proyectos .NET, con especialización en .
 La línea de declaración XML **siempre debe ser eliminada** de los archivos `.xaml`:
 
 ```xml
-<!-- ❌ ELIMINAR esta línea -->
+<!-- REMOVE this line -->
 <?xml version="1.0" encoding="utf-8" ?>
 ```
 
@@ -25,7 +33,7 @@ Las propiedades del elemento raíz deben organizarse en **dos bloques ordenados 
 Cada bloque se trata como independiente para la ordenación.
 
 ```xml
-<!-- ✅ Correcto -->
+<!-- Correct -->
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:local="clr-namespace:MyApp"
@@ -33,7 +41,7 @@ Cada bloque se trata como independiente para la ordenación.
     x:Class="MyApp.MainPage"
     x:Name="Root">
 
-<!-- ❌ Incorrecto (desordenado, x: mezclado con xmlns:) -->
+<!-- Incorrect (unordered, x: mixed with xmlns:) -->
 <ContentPage
     xmlns:viewmodels="clr-namespace:MyApp.ViewModels"
     x:Class="MyApp.MainPage"
@@ -47,13 +55,13 @@ Cada bloque se trata como independiente para la ordenación.
 Toda declaración `xmlns:` que no se esté utilizando en el cuerpo del archivo XAML **debe ser eliminada**.
 
 ```xml
-<!-- ❌ Si "toolkit" no se usa en ningún sitio del XAML, eliminar su declaración -->
+<!-- If "toolkit" is not used anywhere in the XAML, remove its declaration -->
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="MyApp.MainPage">
 
-<!-- ✅ Solo declarar lo que se usa -->
+<!-- Only declare what is used -->
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     x:Class="MyApp.MainPage">
@@ -64,7 +72,7 @@ Toda declaración `xmlns:` que no se esté utilizando en el cuerpo del archivo X
 Cada elemento hijo debe tener **una línea en blanco antes y después** para mejorar la legibilidad. La excepción son las **propiedades adjuntas** del elemento padre (como `Grid.ColumnDefinitions`, `Grid.RowDefinitions`, etc.), que van pegadas directamente a su elemento sin línea en blanco de por medio.
 
 ```xml
-<!-- ✅ Correcto -->
+<!-- Correct -->
 <Grid>
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -77,7 +85,7 @@ Cada elemento hijo debe tener **una línea en blanco antes y después** para mej
 
 </Grid>
 
-<!-- ❌ Incorrecto (sin separación entre elementos) -->
+<!-- Incorrect (no separation between elements) -->
 <Grid>
     <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
@@ -87,7 +95,7 @@ Cada elemento hijo debe tener **una línea en blanco antes y después** para mej
     <controls:LabelControl Grid.Column="1" />
 </Grid>
 
-<!-- ❌ Incorrecto (línea en blanco entre el elemento y sus propiedades adjuntas) -->
+<!-- Incorrect (blank line between element and its attached properties) -->
 <Grid>
 
     <Grid.ColumnDefinitions>
@@ -107,7 +115,7 @@ Cada elemento hijo debe tener **una línea en blanco antes y después** para mej
 **Span** — Los elementos `Span` dentro de un `FormattedString` van sin líneas en blanco, ya que forman parte de un mismo bloque de texto:
 
 ```xml
-<!-- ✅ Correcto -->
+<!-- Correct -->
 <controls:LabelControl>
     <controls:LabelControl.FormattedText>
         <FormattedString>
@@ -121,7 +129,7 @@ Cada elemento hijo debe tener **una línea en blanco antes y después** para mej
 **DataTemplate** — El contenido de un `DataTemplate` va compacto, sin líneas en blanco entre el template y su contenido:
 
 ```xml
-<!-- ✅ Correcto -->
+<!-- Correct -->
 <VerticalStackLayout>
     <BindableLayout.ItemTemplate>
         <DataTemplate>
@@ -136,11 +144,51 @@ Cada elemento hijo debe tener **una línea en blanco antes y después** para mej
 Los cierres de elementos autocerrados (`/>`) deben ir **siempre precedidos por un espacio en blanco**.
 
 ```xml
-<!-- ✅ Correcto -->
+<!-- Correct -->
 <controls:ImageControl />
 <ColumnDefinition Width="Auto" />
 
-<!-- ❌ Incorrecto -->
+<!-- Incorrect -->
 <controls:ImageControl/>
 <ColumnDefinition Width="Auto"/>
+```
+
+### 6. Nomenclatura de elementos (`x:Name`)
+
+Los nombres asignados mediante `x:Name` deben usar un **prefijo** según el tipo de elemento. La siguiente tabla define los prefijos conocidos:
+
+| Elemento                          | Prefijo        |
+|-----------------------------------|----------------|
+| `Label`                           | `Lbl`          |
+| `Span`                            | `Span`         |
+| `Entry`, `Editor`                 | `Txt`          |
+| `Picker`, `DatePicker`, etc.      | `Pck`          |
+| `Button`                          | `Btn`          |
+| `Image`                           | `Img`          |
+| `CheckBox`                        | `Chk`          |
+| `Expander`                        | `Exp`          |
+| `StackLayout`                     | `Stack`        |
+| `Grid`                            | `Grid`         |
+| `ContentView`                     | `Content`      |
+| `ScrollView`                      | `Scroll`       |
+| `TapGestureRecognizer`            | `Tap`          |
+
+Si el elemento **no aparece en la tabla**, se usará como prefijo el propio nombre del elemento, **eliminando el sufijo `Control`** en caso de que lo tenga.
+
+```xml
+<!-- Correct -->
+<Label x:Name="LblTitle" />
+<Entry x:Name="TxtEmail" />
+<Button x:Name="BtnSubmit" />
+<Image x:Name="ImgAvatar" />
+<Grid x:Name="GridContainer" />
+<TapGestureRecognizer x:Name="TapItem" />
+
+<!-- Custom control: "CardControl" -> prefix "Card" (remove "Control" suffix) -->
+<controls:CardControl x:Name="CardProfile" />
+
+<!-- Incorrect -->
+<Label x:Name="TitleLabel" />
+<Button x:Name="SubmitButton" />
+<controls:CardControl x:Name="CardControlProfile" />
 ```
