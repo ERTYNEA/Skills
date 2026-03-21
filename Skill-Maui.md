@@ -6,9 +6,17 @@ Mejores prácticas y convenciones para proyectos .NET, con especialización en .
 
 ## Reglas globales
 
-### Comentarios en inglés
+### Idioma inglés
 
-Todos los comentarios del código deben escribirse **siempre en inglés**, independientemente del tipo de archivo o del idioma del proyecto.
+Todo el código debe escribirse **siempre en inglés**: nombres de clases, propiedades, métodos, variables, comentarios, etc. Independientemente del tipo de archivo o del idioma del proyecto.
+
+### Convenciones de nomenclatura
+
+| Elemento                                      | Convención       | Ejemplo                    |
+|-----------------------------------------------|------------------|----------------------------|
+| **Constantes**                                | `UPPER_CASE`     | `MAX_RETRY_COUNT`          |
+| **Propiedades y métodos** (clases y XAML)     | `PascalCase`     | `UserName`, `GetUserData`  |
+| **Variables** (`var`, parámetros, campos, etc.) | `camelCase`      | `userName`, `retryCount`   |
 
 ---
 
@@ -191,4 +199,152 @@ Si el elemento **no aparece en la tabla**, se usará como prefijo el propio nomb
 <Label x:Name="TitleLabel" />
 <Button x:Name="SubmitButton" />
 <controls:CardControl x:Name="CardControlProfile" />
+```
+
+### 7. Orden de propiedades en los elementos
+
+Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este orden:
+
+1. **`x:Name`** y **estilo** (`Style`, `StyleType`, etc.)
+2. **`Grid.Row`** y **`Grid.Column`**
+3. **Propiedades genéricas** (comunes a muchos elementos: `IsVisible`, `IsEnabled`, `BackgroundColor`, `Opacity`, etc.)
+4. **Propiedades específicas** (propias del elemento: `Text`, `Source`, `Command`, `Placeholder`, `FontSize`, `TextColor`, etc.)
+5. **`HeightRequest`** y **`WidthRequest`**
+6. **`Margin`** y **`Padding`**
+7. **`VerticalOptions`** y **`HorizontalOptions`**
+
+#### Reglas de formato
+
+- **Cada grupo ocupa una línea.** Las propiedades que pertenecen al mismo grupo van juntas en la misma línea.
+- Si una línea crece demasiado, se puede dividir el grupo en varias líneas.
+- Tanto las propiedades genéricas como las específicas se ordenan pensando **de afuera hacia adentro** (cómo afectan al elemento, de lo más externo a lo más interno).
+
+```xml
+<!-- Correct -->
+<controls:LabelControl
+    x:Name="LblTitle" Style="{StaticResource TitleStyle}"
+    Grid.Row="1" Grid.Column="0"
+    IsVisible="{Binding IsVisible}"
+    Text="{Binding Title}" FontSize="18" TextColor="White"
+    HeightRequest="40" WidthRequest="200"
+    Margin="8,0"
+    VerticalOptions="Center" HorizontalOptions="Start" />
+
+<!-- Correct -->
+<Image
+    x:Name="ImgIcon"
+    Grid.Row="0"
+    Source="icon.png"
+    WidthRequest="24" />
+
+<!-- Incorrect (disordered properties) -->
+<controls:LabelControl
+    Margin="8,0"
+    Text="{Binding Title}"
+    x:Name="LblTitle"
+    Grid.Row="1"
+    VerticalOptions="Center"
+    Style="{StaticResource TitleStyle}"
+    IsVisible="{Binding IsVisible}" />
+```
+
+### 8. Declarar explícitamente `Grid.Row` y `Grid.Column` desde 0
+
+Cuando un `Grid` tiene `RowDefinitions`, todos sus elementos hijos deben declarar `Grid.Row` **incluyendo el valor `0`**. Lo mismo aplica para `Grid.Column` cuando el `Grid` tiene `ColumnDefinitions`.
+
+```xml
+<!-- Correct -->
+<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <controls:ImageControl Grid.Row="0" Grid.Column="0" />
+
+    <controls:LabelControl Grid.Row="0" Grid.Column="1" />
+
+    <controls:ButtonControl Grid.Row="1" Grid.Column="0" />
+
+</Grid>
+
+<!-- Incorrect (missing Grid.Row="0" and Grid.Column="0") -->
+<Grid>
+    <Grid.RowDefinitions>
+        <RowDefinition Height="Auto" />
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <controls:ImageControl />
+
+    <controls:LabelControl Grid.Column="1" />
+
+    <controls:ButtonControl Grid.Row="1" />
+
+</Grid>
+```
+
+---
+
+## Archivos C# (`.cs`)
+
+### 1. Namespace con file-scoped declaration
+
+La primera línea del archivo será el `namespace`, usando la sintaxis **file-scoped** (sin llaves `{}`). El resto del código no se encapsula dentro del namespace.
+
+```csharp
+// Correct
+namespace App.UI.Features;
+
+// Incorrect (block-scoped)
+namespace App.UI.Features
+{
+    // ...
+}
+```
+
+### 2. Usings ordenados y sin duplicados
+
+Después del `namespace`, se escriben las directivas `using`. Deben estar **ordenadas alfabéticamente** y se deben **eliminar las que no se estén utilizando**.
+
+```csharp
+// Correct
+namespace App.UI.Features;
+
+using App.Core.Models;
+using App.UI.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Maui.Controls;
+
+// Incorrect (unordered, unused usings)
+namespace App.UI.Features;
+
+using Microsoft.Maui.Controls;
+using App.UI.Controls;
+using System.Diagnostics; // Not used anywhere
+using App.Core.Models;
+```
+
+### 3. Una clase por fichero
+
+Cada archivo `.cs` debe contener **una única clase**. El nombre del archivo debe coincidir con el nombre de la clase.
+
+```csharp
+// Correct — File: UserProfilePage.cs
+namespace App.UI.Features;
+
+using App.Core.Models;
+
+public partial class UserProfilePage : ContentPage
+{
+    // ...
+}
 ```
