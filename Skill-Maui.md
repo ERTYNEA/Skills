@@ -1,6 +1,6 @@
 # Skill - .NET MAUI
 
-> **Versión:** V.0.1  
+> **Versión:** V.0.2  
 > Conjunto de reglas, mejores prácticas y convenciones para proyectos .NET, con especialización en .NET MAUI.
 
 ---
@@ -32,7 +32,31 @@ La línea de declaración XML **siempre debe ser eliminada** de los archivos `.x
 <?xml version="1.0" encoding="utf-8" ?>
 ```
 
-### 2. Orden de propiedades en el elemento raíz
+### 2. Primera propiedad en la misma línea del elemento
+
+La primera propiedad de un elemento XAML debe escribirse **en la misma línea** que la etiqueta de apertura del elemento. Las propiedades adicionales pueden continuar en líneas siguientes con la indentación correspondiente.
+
+```xml
+<!-- Correct -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    x:Class="MyApp.MainPage">
+
+<!-- Correct -->
+<controls:LabelControl x:Name="LblTitle"
+    Text="{Binding Title}" />
+
+<!-- Incorrect (first property on a new line) -->
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    x:Class="MyApp.MainPage">
+
+<!-- Incorrect (first property on a new line) -->
+<controls:LabelControl
+    x:Name="LblTitle"
+    Text="{Binding Title}" />
+```
+
+### 3. Orden de propiedades en el elemento raíz
 
 Las propiedades del elemento raíz deben organizarse en **dos bloques ordenados alfabéticamente**, en este orden:
 
@@ -43,40 +67,36 @@ Cada bloque se trata como independiente para la ordenación.
 
 ```xml
 <!-- Correct -->
-<ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:local="clr-namespace:MyApp"
     xmlns:viewmodels="clr-namespace:MyApp.ViewModels"
     x:Class="MyApp.MainPage"
     x:Name="Root">
 
 <!-- Incorrect (unordered, x: mixed with xmlns:) -->
-<ContentPage
-    xmlns:viewmodels="clr-namespace:MyApp.ViewModels"
+<ContentPage xmlns:viewmodels="clr-namespace:MyApp.ViewModels"
     x:Class="MyApp.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:local="clr-namespace:MyApp"
     x:Name="Root">
 ```
 
-### 3. Eliminar espacios de nombres no utilizados
+### 4. Eliminar espacios de nombres no utilizados
 
 Toda declaración `xmlns:` que no se esté utilizando en el cuerpo del archivo XAML **debe ser eliminada**.
 
 ```xml
 <!-- If "toolkit" is not used anywhere in the XAML, remove its declaration -->
-<ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="MyApp.MainPage">
 
 <!-- Only declare what is used -->
-<ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     x:Class="MyApp.MainPage">
 ```
 
-### 4. Separación entre elementos con líneas en blanco
+### 5. Separación entre elementos con líneas en blanco
 
 Cada elemento hijo debe tener **una línea en blanco antes y después** para mejorar la legibilidad. La excepción son las **propiedades adjuntas** del elemento padre (como `Grid.ColumnDefinitions`, `Grid.RowDefinitions`, etc.), que van pegadas directamente a su elemento sin línea en blanco de por medio.
 
@@ -148,7 +168,7 @@ Cada elemento hijo debe tener **una línea en blanco antes y después** para mej
 </VerticalStackLayout>
 ```
 
-### 5. Espacio antes del cierre de elementos autocerrados
+### 6. Espacio antes del cierre de elementos autocerrados
 
 Los cierres de elementos autocerrados (`/>`) deben ir **siempre precedidos por un espacio en blanco**.
 
@@ -162,7 +182,7 @@ Los cierres de elementos autocerrados (`/>`) deben ir **siempre precedidos por u
 <ColumnDefinition Width="Auto"/>
 ```
 
-### 6. Nomenclatura de elementos (`x:Name`)
+### 7. Nomenclatura de elementos (`x:Name`)
 
 Los nombres asignados mediante `x:Name` deben usar un **prefijo** según el tipo de elemento. La siguiente tabla define los prefijos conocidos:
 
@@ -202,7 +222,7 @@ Si el elemento **no aparece en la tabla**, se usará como prefijo el propio nomb
 <controls:CardControl x:Name="CardControlProfile" />
 ```
 
-### 7. Orden de propiedades en los elementos
+### 8. Orden de propiedades en los elementos
 
 Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este orden:
 
@@ -222,8 +242,7 @@ Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este o
 
 ```xml
 <!-- Correct -->
-<controls:LabelControl
-    x:Name="LblTitle" Style="{StaticResource TitleStyle}"
+<controls:LabelControl x:Name="LblTitle" Style="{StaticResource TitleStyle}"
     Grid.Row="1" Grid.Column="0"
     IsVisible="{Binding IsVisible}"
     Text="{Binding Title}" FontSize="18" TextColor="White"
@@ -232,15 +251,13 @@ Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este o
     VerticalOptions="Center" HorizontalOptions="Start" />
 
 <!-- Correct -->
-<Image
-    x:Name="ImgIcon"
+<Image x:Name="ImgIcon"
     Grid.Row="0"
     Source="icon.png"
     WidthRequest="24" />
 
 <!-- Incorrect (disordered properties) -->
-<controls:LabelControl
-    Margin="8,0"
+<controls:LabelControl Margin="8,0"
     Text="{Binding Title}"
     x:Name="LblTitle"
     Grid.Row="1"
@@ -249,7 +266,7 @@ Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este o
     IsVisible="{Binding IsVisible}" />
 ```
 
-### 8. Declarar explícitamente `Grid.Row` y `Grid.Column` desde 0
+### 9. Declarar explícitamente `Grid.Row` y `Grid.Column` desde 0
 
 Cuando un `Grid` tiene `RowDefinitions`, todos sus elementos hijos deben declarar `Grid.Row` **incluyendo el valor `0`**. Lo mismo aplica para `Grid.Column` cuando el `Grid` tiene `ColumnDefinitions`.
 
