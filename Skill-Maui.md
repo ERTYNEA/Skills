@@ -1,6 +1,6 @@
 # Skill - .NET MAUI
 
-> **Versión:** V.0.1  
+> **Versión:** V.0.2  
 > Conjunto de reglas, mejores prácticas y convenciones para proyectos .NET, con especialización en .NET MAUI.
 
 ---
@@ -32,7 +32,31 @@ La línea de declaración XML **siempre debe ser eliminada** de los archivos `.x
 <?xml version="1.0" encoding="utf-8" ?>
 ```
 
-### 2. Orden de propiedades en el elemento raíz
+### 2. Primera propiedad en la misma línea del elemento
+
+La primera propiedad de un elemento XAML debe escribirse **en la misma línea** que la etiqueta de apertura del elemento. Las propiedades adicionales pueden continuar en líneas siguientes con la indentación correspondiente.
+
+```xml
+<!-- Correct -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    x:Class="MyApp.MainPage">
+
+<!-- Correct -->
+<controls:LabelControl x:Name="LblTitle"
+    Text="{Binding Title}" />
+
+<!-- Incorrect (first property on a new line) -->
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    x:Class="MyApp.MainPage">
+
+<!-- Incorrect (first property on a new line) -->
+<controls:LabelControl
+    x:Name="LblTitle"
+    Text="{Binding Title}" />
+```
+
+### 3. Orden de propiedades en el elemento raíz
 
 Las propiedades del elemento raíz deben organizarse en **dos bloques ordenados alfabéticamente**, en este orden:
 
@@ -43,40 +67,36 @@ Cada bloque se trata como independiente para la ordenación.
 
 ```xml
 <!-- Correct -->
-<ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:local="clr-namespace:MyApp"
     xmlns:viewmodels="clr-namespace:MyApp.ViewModels"
     x:Class="MyApp.MainPage"
     x:Name="Root">
 
 <!-- Incorrect (unordered, x: mixed with xmlns:) -->
-<ContentPage
-    xmlns:viewmodels="clr-namespace:MyApp.ViewModels"
+<ContentPage xmlns:viewmodels="clr-namespace:MyApp.ViewModels"
     x:Class="MyApp.MainPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:local="clr-namespace:MyApp"
     x:Name="Root">
 ```
 
-### 3. Eliminar espacios de nombres no utilizados
+### 4. Eliminar espacios de nombres no utilizados
 
 Toda declaración `xmlns:` que no se esté utilizando en el cuerpo del archivo XAML **debe ser eliminada**.
 
 ```xml
 <!-- If "toolkit" is not used anywhere in the XAML, remove its declaration -->
-<ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
     x:Class="MyApp.MainPage">
 
 <!-- Only declare what is used -->
-<ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     x:Class="MyApp.MainPage">
 ```
 
-### 4. Separación entre elementos con líneas en blanco
+### 5. Separación entre elementos con líneas en blanco
 
 Cada elemento hijo debe tener **una línea en blanco antes y después** para mejorar la legibilidad. La excepción son las **propiedades adjuntas** del elemento padre (como `Grid.ColumnDefinitions`, `Grid.RowDefinitions`, etc.), que van pegadas directamente a su elemento sin línea en blanco de por medio.
 
@@ -148,7 +168,7 @@ Cada elemento hijo debe tener **una línea en blanco antes y después** para mej
 </VerticalStackLayout>
 ```
 
-### 5. Espacio antes del cierre de elementos autocerrados
+### 6. Espacio antes del cierre de elementos autocerrados
 
 Los cierres de elementos autocerrados (`/>`) deben ir **siempre precedidos por un espacio en blanco**.
 
@@ -162,7 +182,7 @@ Los cierres de elementos autocerrados (`/>`) deben ir **siempre precedidos por u
 <ColumnDefinition Width="Auto"/>
 ```
 
-### 6. Nomenclatura de elementos (`x:Name`)
+### 7. Nomenclatura de elementos (`x:Name`)
 
 Los nombres asignados mediante `x:Name` deben usar un **prefijo** según el tipo de elemento. La siguiente tabla define los prefijos conocidos:
 
@@ -202,7 +222,7 @@ Si el elemento **no aparece en la tabla**, se usará como prefijo el propio nomb
 <controls:CardControl x:Name="CardControlProfile" />
 ```
 
-### 7. Orden de propiedades en los elementos
+### 8. Orden de propiedades en los elementos
 
 Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este orden:
 
@@ -222,8 +242,7 @@ Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este o
 
 ```xml
 <!-- Correct -->
-<controls:LabelControl
-    x:Name="LblTitle" Style="{StaticResource TitleStyle}"
+<controls:LabelControl x:Name="LblTitle" Style="{StaticResource TitleStyle}"
     Grid.Row="1" Grid.Column="0"
     IsVisible="{Binding IsVisible}"
     Text="{Binding Title}" FontSize="18" TextColor="White"
@@ -232,15 +251,13 @@ Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este o
     VerticalOptions="Center" HorizontalOptions="Start" />
 
 <!-- Correct -->
-<Image
-    x:Name="ImgIcon"
+<Image x:Name="ImgIcon"
     Grid.Row="0"
     Source="icon.png"
     WidthRequest="24" />
 
 <!-- Incorrect (disordered properties) -->
-<controls:LabelControl
-    Margin="8,0"
+<controls:LabelControl Margin="8,0"
     Text="{Binding Title}"
     x:Name="LblTitle"
     Grid.Row="1"
@@ -249,7 +266,7 @@ Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este o
     IsVisible="{Binding IsVisible}" />
 ```
 
-### 8. Declarar explícitamente `Grid.Row` y `Grid.Column` desde 0
+### 9. Declarar explícitamente `Grid.Row` y `Grid.Column` desde 0
 
 Cuando un `Grid` tiene `RowDefinitions`, todos sus elementos hijos deben declarar `Grid.Row` **incluyendo el valor `0`**. Lo mismo aplica para `Grid.Column` cuando el `Grid` tiene `ColumnDefinitions`.
 
@@ -291,6 +308,356 @@ Cuando un `Grid` tiene `RowDefinitions`, todos sus elementos hijos deben declara
     <controls:ButtonControl Grid.Row="1" />
 
 </Grid>
+```
+
+---
+
+## Archivos Code-Behind (`.xaml.cs`)
+
+### 1. Namespace con file-scoped declaration
+
+La primera línea del archivo será el `namespace`, usando la sintaxis **file-scoped** (sin llaves `{}`).
+
+```csharp
+// Correct
+namespace App.UI.Controls;
+
+// Incorrect (block-scoped)
+namespace App.UI.Controls
+{
+    // ...
+}
+```
+
+### 2. Usings ordenados y sin duplicados
+
+Después del `namespace`, se escriben las directivas `using`. Deben estar **ordenadas alfabéticamente** y se deben **eliminar las que no se estén utilizando**.
+
+```csharp
+// Correct
+namespace App.UI.Controls;
+
+using System.Reactive.Disposables;
+using System.Windows.Input;
+using App.Core.Interfaces;
+using ReactiveUI;
+
+// Incorrect (unordered, unused usings)
+namespace App.UI.Controls;
+
+using ReactiveUI;
+using System.Windows.Input;
+using System.Diagnostics; // Not used anywhere
+using App.Core.Interfaces;
+```
+
+### 3. Declaración de la clase
+
+Cada archivo `.xaml.cs` debe contener **una única clase**. El nombre del archivo debe coincidir con el nombre de la clase.
+
+```csharp
+// Correct — File: UserCardControl.xaml.cs
+namespace App.UI.Controls;
+
+using App.Core.Interfaces;
+
+public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
+{
+    // ...
+}
+```
+
+### 4. Orden del contenido de una clase
+
+El contenido de una clase code-behind se organiza en el siguiente orden:
+
+1. **Propiedades BindableProperty**
+2. **Propiedades de interfaces**
+3. **Resto de propiedades**
+4. **Propiedades ResourceDictionary**
+5. **Constructor**
+6. **Destructor** (si existe)
+7. **Get/Set de BindableProperty** y **OnPropertyChanged**
+8. **OnActivated** (si existen bindings al ViewModel)
+9. **Métodos**
+
+Las propiedades `BindableProperty` deben nombrarse siempre con el sufijo **`Property`** (e.g. `TextProperty`, `CommandProperty`).
+
+Todas las secciones de propiedades siguen la misma regla de ordenación: se agrupan por **nivel de acceso** (de menos restrictivo a más restrictivo: `public` → `internal` → `protected internal` → `protected` → `private`) y dentro de cada grupo se ordenan **alfabéticamente**. Las propiedades y métodos no utilizados **deben eliminarse**.
+
+### 5. Constructor
+
+Va inmediatamente después de todas las propiedades. Lo primero que hace el constructor es **inicializar las propiedades de interfaces**, en el **mismo orden en el que fueron declaradas**, y **antes de `InitializeComponent()`**. Las propiedades de interfaces no utilizadas deben eliminarse.
+
+El nombre de cada propiedad de interfaz se forma a partir del nombre de la interfaz **eliminando el prefijo `I`** y usando **`camelCase`** (convención de variables).
+
+```csharp
+public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
+{
+    // ...properties...
+
+    private IAuthService authService;
+    private INavigationService navigationService;
+
+    public UserCardControl(
+        IAuthService authService,
+        INavigationService navigationService)
+    {
+        this.authService = authService;
+        this.navigationService = navigationService;
+
+        InitializeComponent();
+    }
+
+    // ...
+}
+```
+
+### 6. Destructor
+
+Si la clase tiene destructor, este se escribe **inmediatamente después del constructor**.
+
+```csharp
+    public UserCardControl(INavigationService navigationService)
+    {
+        this.navigationService = navigationService;
+
+        InitializeComponent();
+    }
+
+    ~UserCardControl()
+    {
+        // ... cleanup
+    }
+
+    // ...
+```
+
+### 7. Get/Set de BindableProperty y OnPropertyChanged
+
+Después del destructor (o del constructor si no hay destructor) se escriben los **get/set** de cada `BindableProperty`, en el **mismo orden en que fueron declaradas**. Se debe revisar la **nulabilidad** del tipo en el getter y setter.
+
+A continuación, si existen `BindableProperty`, se instancia o sobreescribe el método **`OnPropertyChanged`** para gestionar los cambios de propiedades:
+
+- El orden de los bloques `if`/`else if` sigue el **mismo orden de declaración** de las `BindableProperty`.
+- Si la acción cabe en **una sola línea**, se escribe directamente en el bloque.
+- Si la acción necesita **más de una línea**, se delega a un **método privado** cuyo nombre será el de la `BindableProperty` seguido del sufijo `Changed` (e.g. `CommandProperty` → `CommandPropertyChanged`).
+- Se deben **eliminar** las entradas de propiedades que no estén en uso.
+
+```csharp
+    // BindableProperty get/set (same order as declared)
+    public ICommand? Command
+    {
+        get => (ICommand?)GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
+    }
+
+    public bool IsActive
+    {
+        get => (bool)GetValue(IsActiveProperty);
+        set => SetValue(IsActiveProperty, value);
+    }
+
+    public string? Text
+    {
+        get => (string?)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
+    }
+
+    // OnPropertyChanged (same order as BindableProperty declarations)
+    protected override void OnPropertyChanged(string propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+
+        if (propertyName == CommandProperty.PropertyName)
+            CommandPropertyChanged();
+        else if (propertyName == IsActiveProperty.PropertyName)
+            BtnMain.IsEnabled = IsActive;
+        else if (propertyName == TextProperty.PropertyName)
+            LblMain.Text = Text;
+    }
+```
+
+### 8. OnActivated
+
+Si se necesitan bindear elementos del XAML al `ViewModel`, se hará en el método **`OnActivated`** (instanciándolo o sobreescribiéndolo). Dentro se usará `disposables.Add(...)` para cada binding.
+
+Los bindings se organizan en **familias independientes**, en este orden:
+
+1. **`OneWayBind`** — Bindings de solo lectura del ViewModel hacia la vista.
+2. **`Bind`** — Bindings bidireccionales.
+3. **`Subscribe`** — Suscripciones a cambios con `WhenAnyValue`. Siempre se ejecutan en el hilo principal usando `.ObserveOn(RxApp.MainThreadScheduler)`. Si la suscripción cabe en una línea se escribe inline; si necesita más de una línea se delega a un método cuyo nombre será la propiedad del ViewModel seguida del sufijo `Subscribe` (e.g. propiedad `Items` → `ItemsSubscribe`).
+4. **`BindCommand`** — Bindings de comandos.
+
+Dentro de cada familia, los bindings se ordenan **alfabéticamente por la propiedad del ViewModel** a la que están vinculados.
+
+```csharp
+    protected override void OnActivated(CompositeDisposable disposables)
+    {
+        base.OnActivated(disposables);
+
+        // OneWayBind
+        disposables.Add(this.OneWayBind(ViewModel, vm => vm.Icon, v => v.ImgIcon.Source));
+        disposables.Add(this.OneWayBind(ViewModel, vm => vm.Title, v => v.LblTitle.Text));
+
+        // Bind
+        disposables.Add(this.Bind(ViewModel, vm => vm.IsEditing, v => v.TxtName.IsEnabled));
+        disposables.Add(this.Bind(ViewModel, vm => vm.UserName, v => v.TxtName.Text));
+
+        // Subscribe
+        disposables.Add(ViewModel.WhenAnyValue(vm => vm.Items)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(ItemsSubscribe));
+        disposables.Add(ViewModel.WhenAnyValue(vm => vm.Status)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(status => LblStatus.Text = status));
+
+        // BindCommand
+        disposables.Add(this.BindCommand(ViewModel, vm => vm.DeleteCommand, v => v.BtnDelete));
+        disposables.Add(this.BindCommand(ViewModel, vm => vm.SaveCommand, v => v.BtnSave));
+    }
+```
+
+### 9. Métodos
+
+Después de `OnActivated` se escriben los **métodos**. Se ordenan por nivel de acceso (de menos restrictivo a más restrictivo) y **alfabéticamente** dentro de cada grupo.
+
+```csharp
+    private void CommandPropertyChanged()
+    {
+        BtnMain.Command = Command;
+        BtnMain.IsEnabled = Command != null;
+    }
+
+    private void ItemsSubscribe(IEnumerable<string> items)
+    {
+        StackItems.Children.Clear();
+        foreach (var item in items)
+            StackItems.Children.Add(new Label { Text = item });
+    }
+```
+
+### Ejemplo completo
+
+```csharp
+// File: UserCardControl.xaml.cs
+namespace App.UI.Controls;
+
+using System.Reactive.Disposables;
+using System.Windows.Input;
+using App.Core.Interfaces;
+using ReactiveUI;
+using ReactiveUI.Maui;
+
+public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
+{
+    // BindableProperty
+    public static readonly BindableProperty CommandProperty =
+        BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(UserCardControl));
+    public static readonly BindableProperty IsActiveProperty =
+        BindableProperty.Create(nameof(IsActive), typeof(bool), typeof(UserCardControl));
+    public static readonly BindableProperty TextProperty =
+        BindableProperty.Create(nameof(Text), typeof(string), typeof(UserCardControl));
+
+    // Interface properties
+    private IAuthService authService;
+    private INavigationService navigationService;
+
+    // Other properties
+    private bool isInitialized;
+
+    // ResourceDictionary
+    private ResourceDictionary mainResources;
+
+    // Constructor
+    public UserCardControl(
+        IAuthService authService,
+        INavigationService navigationService)
+    {
+        this.authService = authService;
+        this.navigationService = navigationService;
+
+        InitializeComponent();
+    }
+
+    // Destructor
+    ~UserCardControl()
+    {
+        // ... cleanup
+    }
+
+    // BindableProperty get/set
+    public ICommand? Command
+    {
+        get => (ICommand?)GetValue(CommandProperty);
+        set => SetValue(CommandProperty, value);
+    }
+
+    public bool IsActive
+    {
+        get => (bool)GetValue(IsActiveProperty);
+        set => SetValue(IsActiveProperty, value);
+    }
+
+    public string? Text
+    {
+        get => (string?)GetValue(TextProperty);
+        set => SetValue(TextProperty, value);
+    }
+
+    // OnPropertyChanged
+    protected override void OnPropertyChanged(string propertyName = null)
+    {
+        base.OnPropertyChanged(propertyName);
+
+        if (propertyName == CommandProperty.PropertyName)
+            CommandPropertyChanged();
+        else if (propertyName == IsActiveProperty.PropertyName)
+            BtnMain.IsEnabled = IsActive;
+        else if (propertyName == TextProperty.PropertyName)
+            LblMain.Text = Text;
+    }
+
+    // OnActivated
+    protected override void OnActivated(CompositeDisposable disposables)
+    {
+        base.OnActivated(disposables);
+
+        // OneWayBind
+        disposables.Add(this.OneWayBind(ViewModel, vm => vm.Icon, v => v.ImgIcon.Source));
+        disposables.Add(this.OneWayBind(ViewModel, vm => vm.Title, v => v.LblTitle.Text));
+
+        // Bind
+        disposables.Add(this.Bind(ViewModel, vm => vm.IsEditing, v => v.TxtName.IsEnabled));
+        disposables.Add(this.Bind(ViewModel, vm => vm.UserName, v => v.TxtName.Text));
+
+        // Subscribe
+        disposables.Add(ViewModel.WhenAnyValue(vm => vm.Items)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(ItemsSubscribe));
+        disposables.Add(ViewModel.WhenAnyValue(vm => vm.Status)
+            .ObserveOn(RxApp.MainThreadScheduler)
+            .Subscribe(status => LblStatus.Text = status));
+
+        // BindCommand
+        disposables.Add(this.BindCommand(ViewModel, vm => vm.DeleteCommand, v => v.BtnDelete));
+        disposables.Add(this.BindCommand(ViewModel, vm => vm.SaveCommand, v => v.BtnSave));
+    }
+
+    // Methods
+    private void CommandPropertyChanged()
+    {
+        BtnMain.Command = Command;
+        BtnMain.IsEnabled = Command != null;
+    }
+
+    private void ItemsSubscribe(IEnumerable<string> items)
+    {
+        StackItems.Children.Clear();
+        foreach (var item in items)
+            StackItems.Children.Add(new Label { Text = item });
+    }
+}
 ```
 
 ---
@@ -366,15 +733,14 @@ Todas las secciones de propiedades y métodos siguen la misma regla de ordenaci�
 
 ### 5. Propiedades de interfaces
 
-Son las primeras que se escriben en la clase. Se declaran al inicio, antes del constructor.
+Son las primeras que se escriben en la clase. Se declaran al inicio, antes del constructor. El nombre de cada propiedad se forma a partir del nombre de la interfaz **eliminando el prefijo `I`** y usando **`camelCase`**.
 
 ```csharp
 public partial class UserProfilePage : ContentPage
 {
-    public IAuthService AuthService { get; set; }
-    public INavigationService NavigationService { get; set; }
-
+    private IAuthService authService;
     private ILoggerService loggerService;
+    private INavigationService navigationService;
 
     // ...
 }
@@ -387,19 +753,18 @@ Va inmediatamente después de las propiedades de interfaces. Lo primero que hace
 ```csharp
 public partial class UserProfilePage : ContentPage
 {
-    public IAuthService AuthService { get; set; }
-    public INavigationService NavigationService { get; set; }
-
+    private IAuthService authService;
     private ILoggerService loggerService;
+    private INavigationService navigationService;
 
     public UserProfilePage(
         IAuthService authService,
-        INavigationService navigationService,
-        ILoggerService loggerService)
+        ILoggerService loggerService,
+        INavigationService navigationService)
     {
-        AuthService = authService;
-        NavigationService = navigationService;
+        this.authService = authService;
         this.loggerService = loggerService;
+        this.navigationService = navigationService;
 
         // ... other initialization
     }
@@ -531,20 +896,19 @@ using ReactiveUI;
 public partial class UserProfilePage : ContentPage
 {
     // Interface properties
-    public IAuthService AuthService { get; set; }
-    public INavigationService NavigationService { get; set; }
-
+    private IAuthService authService;
     private ILoggerService loggerService;
+    private INavigationService navigationService;
 
     // Constructor
     public UserProfilePage(
         IAuthService authService,
-        INavigationService navigationService,
-        ILoggerService loggerService)
+        ILoggerService loggerService,
+        INavigationService navigationService)
     {
-        AuthService = authService;
-        NavigationService = navigationService;
+        this.authService = authService;
         this.loggerService = loggerService;
+        this.navigationService = navigationService;
     }
 
     // Destructor
