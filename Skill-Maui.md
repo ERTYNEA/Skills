@@ -1,6 +1,6 @@
 # Skill - .NET MAUI
 
-> **Versión:** V.0.2  
+> **Versión:** V.0.3
 > Conjunto de reglas, mejores prácticas y convenciones para proyectos .NET, con especialización en .NET MAUI.
 
 ---
@@ -337,10 +337,10 @@ Después del `namespace`, se escriben las directivas `using`. Deben estar **orde
 // Correct
 namespace App.UI.Controls;
 
-using System.Reactive.Disposables;
-using System.Windows.Input;
 using App.Core.Interfaces;
 using ReactiveUI;
+using System.Reactive.Disposables;
+using System.Windows.Input;
 
 // Incorrect (unordered, unused usings)
 namespace App.UI.Controls;
@@ -367,7 +367,81 @@ public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
 }
 ```
 
-### 4. Orden del contenido de una clase
+### 4. Llaves en estructuras de control
+
+Esta regla aplica al código C# de archivos `.xaml.cs`.
+
+Cuando una estructura de control contenga una única instrucción de una sola línea, **no deben utilizarse llaves**. La estructura de control se escribe en una línea y la instrucción interna en la línea siguiente, con la indentación correspondiente.
+
+Las estructuras de control afectadas por esta regla son: `if`, `else if`, `else`, `for`, `foreach`, `while` y `do while`.
+
+Los bloques `try`, `catch` y `finally` **siempre deben mantener llaves**, aunque contengan una única instrucción. La estructura `switch` queda fuera de esta regla porque su sintaxis requiere un bloque con llaves.
+
+```csharp
+// Correct
+if (isValid)
+    SaveData();
+else if (isPending)
+    QueueData();
+else
+    ClearData();
+
+for (var index = 0; index < items.Count; index++)
+    ProcessItem(items[index]);
+
+foreach (var item in items)
+    ProcessItem(item);
+
+while (reader.Read())
+    ProcessRow(reader);
+
+do
+    retryCount++;
+while (ShouldRetry(retryCount));
+
+// Incorrect (single instruction with braces)
+if (isValid)
+{
+    SaveData();
+}
+else if (isPending)
+{
+    QueueData();
+}
+else
+{
+    ClearData();
+}
+
+foreach (var item in items)
+{
+    ProcessItem(item);
+}
+
+// Correct (try/catch/finally always keep braces)
+try
+{
+    SaveData();
+}
+catch (Exception exception)
+{
+    LogError(exception);
+}
+finally
+{
+    StopLoading();
+}
+
+// Incorrect (try/catch/finally without braces)
+try
+    SaveData();
+catch (Exception exception)
+    LogError(exception);
+finally
+    StopLoading();
+```
+
+### 5. Orden del contenido de una clase
 
 El contenido de una clase code-behind se organiza en el siguiente orden:
 
@@ -385,7 +459,7 @@ Las propiedades `BindableProperty` deben nombrarse siempre con el sufijo **`Prop
 
 Todas las secciones de propiedades siguen la misma regla de ordenación: se agrupan por **nivel de acceso** (de menos restrictivo a más restrictivo: `public` → `internal` → `protected internal` → `protected` → `private`) y dentro de cada grupo se ordenan **alfabéticamente**. Las propiedades y métodos no utilizados **deben eliminarse**.
 
-### 5. Constructor
+### 6. Constructor
 
 Va inmediatamente después de todas las propiedades. Lo primero que hace el constructor es **inicializar las propiedades de interfaces**, en el **mismo orden en el que fueron declaradas**, y **antes de `InitializeComponent()`**. Las propiedades de interfaces no utilizadas deben eliminarse.
 
@@ -413,7 +487,7 @@ public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
 }
 ```
 
-### 6. Destructor
+### 7. Destructor
 
 Si la clase tiene destructor, este se escribe **inmediatamente después del constructor**.
 
@@ -433,14 +507,14 @@ Si la clase tiene destructor, este se escribe **inmediatamente después del cons
     // ...
 ```
 
-### 7. Get/Set de BindableProperty y OnPropertyChanged
+### 8. Get/Set de BindableProperty y OnPropertyChanged
 
 Después del destructor (o del constructor si no hay destructor) se escriben los **get/set** de cada `BindableProperty`, en el **mismo orden en que fueron declaradas**. Se debe revisar la **nulabilidad** del tipo en el getter y setter.
 
 A continuación, si existen `BindableProperty`, se instancia o sobreescribe el método **`OnPropertyChanged`** para gestionar los cambios de propiedades:
 
 - El orden de los bloques `if`/`else if` sigue el **mismo orden de declaración** de las `BindableProperty`.
-- Si la acción cabe en **una sola línea**, se escribe directamente en el bloque.
+- Si la acción cabe en **una sola línea**, se escribe en la línea siguiente, sin llaves.
 - Si la acción necesita **más de una línea**, se delega a un **método privado** cuyo nombre será el de la `BindableProperty` seguido del sufijo `Changed` (e.g. `CommandProperty` → `CommandPropertyChanged`).
 - Se deben **eliminar** las entradas de propiedades que no estén en uso.
 
@@ -478,7 +552,7 @@ A continuación, si existen `BindableProperty`, se instancia o sobreescribe el m
     }
 ```
 
-### 8. OnActivated
+### 9. OnActivated
 
 Si se necesitan bindear elementos del XAML al `ViewModel`, se hará en el método **`OnActivated`** (instanciándolo o sobreescribiéndolo). Dentro se usará `disposables.Add(...)` para cada binding.
 
@@ -518,7 +592,7 @@ Dentro de cada familia, los bindings se ordenan **alfabéticamente por la propie
     }
 ```
 
-### 9. Métodos
+### 10. Métodos
 
 Después de `OnActivated` se escriben los **métodos**. Se ordenan por nivel de acceso (de menos restrictivo a más restrictivo) y **alfabéticamente** dentro de cada grupo.
 
@@ -543,11 +617,11 @@ Después de `OnActivated` se escriben los **métodos**. Se ordenan por nivel de 
 // File: UserCardControl.xaml.cs
 namespace App.UI.Controls;
 
-using System.Reactive.Disposables;
-using System.Windows.Input;
 using App.Core.Interfaces;
 using ReactiveUI;
 using ReactiveUI.Maui;
+using System.Reactive.Disposables;
+using System.Windows.Input;
 
 public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
 {
@@ -717,7 +791,81 @@ public partial class UserProfilePage : ContentPage
 }
 ```
 
-### 4. Orden del contenido de una clase
+### 4. Llaves en estructuras de control
+
+Esta regla aplica al código C# de archivos `.cs`.
+
+Cuando una estructura de control contenga una única instrucción de una sola línea, **no deben utilizarse llaves**. La estructura de control se escribe en una línea y la instrucción interna en la línea siguiente, con la indentación correspondiente.
+
+Las estructuras de control afectadas por esta regla son: `if`, `else if`, `else`, `for`, `foreach`, `while` y `do while`.
+
+Los bloques `try`, `catch` y `finally` **siempre deben mantener llaves**, aunque contengan una única instrucción. La estructura `switch` queda fuera de esta regla porque su sintaxis requiere un bloque con llaves.
+
+```csharp
+// Correct
+if (isValid)
+    SaveData();
+else if (isPending)
+    QueueData();
+else
+    ClearData();
+
+for (var index = 0; index < items.Count; index++)
+    ProcessItem(items[index]);
+
+foreach (var item in items)
+    ProcessItem(item);
+
+while (reader.Read())
+    ProcessRow(reader);
+
+do
+    retryCount++;
+while (ShouldRetry(retryCount));
+
+// Incorrect (single instruction with braces)
+if (isValid)
+{
+    SaveData();
+}
+else if (isPending)
+{
+    QueueData();
+}
+else
+{
+    ClearData();
+}
+
+foreach (var item in items)
+{
+    ProcessItem(item);
+}
+
+// Correct (try/catch/finally always keep braces)
+try
+{
+    SaveData();
+}
+catch (Exception exception)
+{
+    LogError(exception);
+}
+finally
+{
+    StopLoading();
+}
+
+// Incorrect (try/catch/finally without braces)
+try
+    SaveData();
+catch (Exception exception)
+    LogError(exception);
+finally
+    StopLoading();
+```
+
+### 5. Orden del contenido de una clase
 
 El contenido de una clase se organiza en el siguiente orden:
 
@@ -731,7 +879,7 @@ El contenido de una clase se organiza en el siguiente orden:
 
 Todas las secciones de propiedades y métodos siguen la misma regla de ordenación: se agrupan por **nivel de acceso** (de menos restrictivo a más restrictivo: `public` → `internal` → `protected internal` → `protected` → `private`) y dentro de cada grupo se ordenan **alfabéticamente**. Las propiedades y métodos no utilizados **deben eliminarse**.
 
-### 5. Propiedades de interfaces
+### 6. Propiedades de interfaces
 
 Son las primeras que se escriben en la clase. Se declaran al inicio, antes del constructor. El nombre de cada propiedad se forma a partir del nombre de la interfaz **eliminando el prefijo `I`** y usando **`camelCase`**.
 
@@ -746,7 +894,7 @@ public partial class UserProfilePage : ContentPage
 }
 ```
 
-### 6. Constructor
+### 7. Constructor
 
 Va inmediatamente después de las propiedades de interfaces. Lo primero que hace el constructor es **inicializar las propiedades de interfaces**, en el **mismo orden en el que fueron declaradas**.
 
@@ -773,7 +921,7 @@ public partial class UserProfilePage : ContentPage
 }
 ```
 
-### 7. Destructor
+### 8. Destructor
 
 Si la clase tiene destructor, este se escribe **inmediatamente después del constructor**.
 
@@ -791,7 +939,7 @@ Si la clase tiene destructor, este se escribe **inmediatamente después del cons
     // ...
 ```
 
-### 8. Propiedades Reactive y ReactiveCommand
+### 9. Propiedades Reactive y ReactiveCommand
 
 Después del destructor (o del constructor si no hay destructor) se escriben las propiedades **Reactive**, seguidas de las propiedades **ReactiveCommand**. Ambos grupos se ordenan por nivel de acceso y alfabéticamente. Los atributos como `[Reactive]` se escriben en una **línea separada**, encima de la propiedad a la que afectan.
 
@@ -812,7 +960,7 @@ Después del destructor (o del constructor si no hay destructor) se escriben las
     private ReactiveCommand<Unit, Unit> validateCommand;
 ```
 
-### 9. Resto de propiedades
+### 10. Resto de propiedades
 
 Por último se escriben el resto de propiedades que no encajan en las categorías anteriores, siguiendo la misma ordenación por nivel de acceso y alfabéticamente.
 
@@ -824,7 +972,7 @@ Por último se escriben el resto de propiedades que no encajan en las categoría
     private bool isLoading;
 ```
 
-### 10. Métodos
+### 11. Métodos
 
 Después de todas las propiedades se escriben los **métodos**. Se ordenan por nivel de acceso (de menos restrictivo a más restrictivo) y **alfabéticamente** dentro de cada grupo.
 
@@ -855,7 +1003,7 @@ Después de todas las propiedades se escriben los **métodos**. Se ordenan por n
     }
 ```
 
-### 11. Sufijo `Async` en métodos asíncronos
+### 12. Sufijo `Async` en métodos asíncronos
 
 Los métodos `async` deben tener siempre el sufijo **`Async`** al final de su nombre.
 
@@ -964,4 +1112,3 @@ public partial class UserProfilePage : ContentPage
     }
 }
 ```
-
