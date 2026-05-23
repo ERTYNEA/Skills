@@ -1,6 +1,6 @@
 # Skill - .NET MAUI
 
-> **Versión:** V.0.2  
+> **Versión:** V.0.3
 > Conjunto de reglas, mejores prácticas y convenciones para proyectos .NET, con especialización en .NET MAUI.
 
 ---
@@ -883,6 +883,80 @@ private async Task<bool> ValidateInput()
 }
 ```
 
+### 12. Llaves en estructuras de control
+
+Esta regla aplica al código C# de archivos `.cs` y `.xaml.cs`.
+
+Cuando una estructura de control contenga una única instrucción de una sola línea, **no deben utilizarse llaves**. La estructura de control se escribe en una línea y la instrucción interna en la línea siguiente, con la indentación correspondiente.
+
+Las estructuras de control afectadas por esta regla son: `if`, `else if`, `else`, `for`, `foreach`, `while` y `do while`.
+
+Los bloques `try`, `catch` y `finally` **siempre deben mantener llaves**, aunque contengan una única instrucción. La estructura `switch` queda fuera de esta regla porque su sintaxis requiere un bloque con llaves.
+
+```csharp
+// Correct
+if (isValid)
+    SaveData();
+else if (isPending)
+    QueueData();
+else
+    ClearData();
+
+for (var index = 0; index < items.Count; index++)
+    ProcessItem(items[index]);
+
+foreach (var item in items)
+    ProcessItem(item);
+
+while (reader.Read())
+    ProcessRow(reader);
+
+do
+    retryCount++;
+while (ShouldRetry(retryCount));
+
+// Incorrect (single instruction with braces)
+if (isValid)
+{
+    SaveData();
+}
+else if (isPending)
+{
+    QueueData();
+}
+else
+{
+    ClearData();
+}
+
+foreach (var item in items)
+{
+    ProcessItem(item);
+}
+
+// Correct (try/catch/finally always keep braces)
+try
+{
+    SaveData();
+}
+catch (Exception exception)
+{
+    LogError(exception);
+}
+finally
+{
+    StopLoading();
+}
+
+// Incorrect (try/catch/finally without braces)
+try
+    SaveData();
+catch (Exception exception)
+    LogError(exception);
+finally
+    StopLoading();
+```
+
 ### Ejemplo completo
 
 ```csharp
@@ -964,4 +1038,3 @@ public partial class UserProfilePage : ContentPage
     }
 }
 ```
-
