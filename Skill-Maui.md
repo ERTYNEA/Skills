@@ -1,6 +1,6 @@
 # Skill - .NET MAUI
 
-> **Versión:** V.0.3
+> **Versión:** V.0.4.0
 > Conjunto de reglas, mejores prácticas y convenciones para proyectos .NET, con especialización en .NET MAUI.
 
 ---
@@ -15,9 +15,24 @@ Todo el código debe escribirse **siempre en inglés**: nombres de clases, propi
 
 | Elemento                                      | Convención       | Ejemplo                    |
 |-----------------------------------------------|------------------|----------------------------|
-| **Constantes**                                | `UPPER_CASE`     | `MAX_RETRY_COUNT`          |
+| **Campos privados y constantes privadas**     | `camelCase`      | `maxRetryCount`            |
 | **Propiedades y métodos** (clases y XAML)     | `PascalCase`     | `UserName`, `GetUserData`  |
 | **Variables** (`var`, parámetros, campos, etc.) | `camelCase`      | `userName`, `retryCount` (sin prefijo `_`) |
+
+### Formato base
+
+- La indentación se hará con **tabuladores** (`tab`) y ancho visual de 4 espacios.
+- Usar `var` solo cuando el tipo sea evidente por la asignación. Si el tipo no es claro, usar el tipo explícito.
+- No usar `this.` salvo que sea necesario para desambiguar o para invocar extension methods que lo requieran.
+- No dejar bloques `catch` vacíos. Como mínimo, registrar la excepción, propagarla o justificar explícitamente por qué se ignora.
+
+### Organización recomendada por features
+
+En aplicaciones MAUI medianas o grandes, especialmente cuando están organizadas por pantallas o flujos funcionales, se recomienda agrupar cada feature en su propia carpeta con sus elementos relacionados (`Page`, `ViewModel`, servicios y modelos específicos). Si el proyecto ya usa otra arquitectura clara, se debe respetar la estructura existente.
+
+### Clases base del proyecto
+
+Si el proyecto define clases base comunes para `Page`, `ViewModel`, `Popup`, `ContentView`, servicios u otros componentes, deben usarse de forma consistente. No introducir una clase base distinta si contradice el patrón existente del proyecto.
 
 ---
 
@@ -232,7 +247,7 @@ Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este o
 4. **Propiedades específicas** (propias del elemento: `Text`, `Source`, `Command`, `Placeholder`, `FontSize`, `TextColor`, etc.)
 5. **`HeightRequest`** y **`WidthRequest`**
 6. **`Margin`** y **`Padding`**
-7. **`VerticalOptions`** y **`HorizontalOptions`**
+7. **`HorizontalOptions`** y **`VerticalOptions`**
 
 #### Reglas de formato
 
@@ -248,7 +263,7 @@ Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este o
     Text="{Binding Title}" FontSize="18" TextColor="White"
     HeightRequest="40" WidthRequest="200"
     Margin="8,0"
-    VerticalOptions="Center" HorizontalOptions="Start" />
+    HorizontalOptions="Start" VerticalOptions="Center" />
 
 <!-- Correct -->
 <Image x:Name="ImgIcon"
@@ -1003,15 +1018,20 @@ Después de todas las propiedades se escriben los **métodos**. Se ordenan por n
     }
 ```
 
-### 12. Sufijo `Async` en métodos asíncronos
+### 12. Sufijo `Async` en métodos que devuelven tareas
 
-Los métodos `async` deben tener siempre el sufijo **`Async`** al final de su nombre.
+Los métodos que devuelvan `Task`, `Task<T>`, `ValueTask` o `ValueTask<T>` deben tener siempre el sufijo **`Async`** al final de su nombre, aunque no estén marcados con el modificador `async`.
 
 ```csharp
 // Correct
 public async Task LoadDataAsync()
 {
     // ...
+}
+
+public Task RefreshDataAsync()
+{
+    return dataService.RefreshDataAsync();
 }
 
 private async Task<bool> ValidateInputAsync()
