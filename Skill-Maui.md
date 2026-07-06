@@ -11,28 +11,17 @@
 
 Todo el código debe escribirse **siempre en inglés**: nombres de clases, propiedades, métodos, variables, comentarios, etc. Independientemente del tipo de archivo o del idioma del proyecto.
 
-### Convenciones de nomenclatura
+### Comentarios actualizados y concisos
 
-| Elemento                                      | Convención       | Ejemplo                    |
-|-----------------------------------------------|------------------|----------------------------|
-| **Campos privados y constantes privadas**     | `camelCase`      | `maxRetryCount`            |
-| **Propiedades y métodos** (clases y XAML)     | `PascalCase`     | `UserName`, `GetUserData`  |
-| **Variables** (`var`, parámetros, campos, etc.) | `camelCase`      | `userName`, `retryCount` (sin prefijo `_`) |
+Todos los comentarios deben revisarse para garantizar que siguen describiendo el estado actual del código. Si una refactorización, cambio de flujo o ajuste funcional deja un comentario desactualizado, el comentario debe actualizarse. Los comentarios deben estar escritos en inglés, ser breves y aportar contexto útil sin repetir de forma evidente lo que ya expresa el código.
 
-### Formato base
+### Indentación
 
-- La indentación se hará con **tabuladores** (`tab`) y ancho visual de 4 espacios.
-- Usar `var` solo cuando el tipo sea evidente por la asignación. Si el tipo no es claro, usar el tipo explícito.
-- No usar `this.` salvo que sea necesario para desambiguar o para invocar extension methods que lo requieran.
-- No dejar bloques `catch` vacíos. Como mínimo, registrar la excepción, propagarla o justificar explícitamente por qué se ignora.
+La indentación se hará con **tabuladores** (`tab`) y ancho visual de 4 espacios en todos los tipos de archivo del proyecto.
 
 ### Organización recomendada por features
 
-En aplicaciones MAUI medianas o grandes, especialmente cuando están organizadas por pantallas o flujos funcionales, se recomienda agrupar cada feature en su propia carpeta con sus elementos relacionados (`Page`, `ViewModel`, servicios y modelos específicos). Si el proyecto ya usa otra arquitectura clara, se debe respetar la estructura existente.
-
-### Clases base del proyecto
-
-Si el proyecto define clases base comunes para `Page`, `ViewModel`, `Popup`, `ContentView`, servicios u otros componentes, deben usarse de forma consistente. No introducir una clase base distinta si contradice el patrón existente del proyecto.
+Cuando un proyecto esté organizado por pantallas, flujos funcionales o módulos, se recomienda agrupar cada feature en su propia carpeta con sus elementos relacionados. Si el proyecto ya usa otra arquitectura clara, se debe respetar la estructura existente.
 
 ---
 
@@ -328,6 +317,48 @@ Cuando un `Grid` tiene `RowDefinitions`, todos sus elementos hijos deben declara
 ---
 
 ## Archivos Code-Behind (`.xaml.cs`)
+
+### Convenciones de nomenclatura C#
+
+| Elemento                                      | Convención       | Ejemplo                    |
+|-----------------------------------------------|------------------|----------------------------|
+| **Campos privados y constantes privadas**     | `camelCase`      | `maxRetryCount`            |
+| **Propiedades y métodos**                     | `PascalCase`     | `UserName`, `GetUserData`  |
+| **Variables** (`var`, parámetros, campos, etc.) | `camelCase`      | `userName`, `retryCount` (sin prefijo `_`) |
+
+### Formato C# base
+
+- Usar `var` solo cuando el tipo sea evidente por la asignación. Si el tipo no es claro, usar el tipo explícito.
+- No usar `this.` salvo que sea necesario para desambiguar o para invocar extension methods que lo requieran.
+- No dejar bloques `catch` vacíos. Como mínimo, registrar la excepción, propagarla o justificar explícitamente por qué se ignora.
+
+### Documentación XML de métodos
+
+Los métodos medianos, grandes o con complejidad considerable deben incluir documentación XML con `/// <summary>`. Los métodos pequeños y evidentes no deben recibir documentación XML innecesaria solo por aplicar esta regla.
+
+Si un método se mueve o reordena y ya tiene documentación XML, esa documentación forma parte del método y debe moverse junto con él. No se debe separar, borrar ni dejar atrás el `summary` al reorganizar métodos.
+
+Toda documentación XML existente debe revisarse para garantizar que sigue reflejando el comportamiento actual del método. El `summary` debe explicar de forma clara y resumida qué hace el método. Cuando el método tenga parámetros, cada parámetro debe documentarse con `/// <param name="...">`. Cuando el método devuelva un valor significativo, debe documentarse con `/// <returns>`. El orden recomendado es: `summary`, después `param` en el mismo orden de la firma del método, y finalmente `returns`.
+
+```csharp
+/// <summary>
+/// Loads the user profile data.
+/// </summary>
+/// <param name="userId">Identifier of the user to load.</param>
+/// <returns>The loaded user profile.</returns>
+public Task<UserProfile> LoadUserProfileAsync(string userId)
+{
+    // ...
+}
+```
+
+### Clases base del proyecto
+
+Si el proyecto define clases base comunes para `Page`, `ViewModel`, `Popup`, `ContentView`, servicios u otros componentes, deben usarse de forma consistente. No introducir una clase base distinta si contradice el patrón existente del proyecto.
+
+### Sufijo `Async` en métodos que devuelven tareas
+
+Los métodos que devuelvan `Task`, `Task<T>`, `ValueTask` o `ValueTask<T>` deben tener siempre el sufijo **`Async`** al final de su nombre, aunque no estén marcados con el modificador `async`.
 
 ### 1. Namespace con file-scoped declaration
 
@@ -753,6 +784,48 @@ public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
 
 ## Archivos C# (`.cs`)
 
+### Convenciones de nomenclatura C#
+
+| Elemento                                      | Convención       | Ejemplo                    |
+|-----------------------------------------------|------------------|----------------------------|
+| **Campos privados y constantes privadas**     | `camelCase`      | `maxRetryCount`            |
+| **Propiedades y métodos**                     | `PascalCase`     | `UserName`, `GetUserData`  |
+| **Variables** (`var`, parámetros, campos, etc.) | `camelCase`      | `userName`, `retryCount` (sin prefijo `_`) |
+
+### Formato C# base
+
+- Usar `var` solo cuando el tipo sea evidente por la asignación. Si el tipo no es claro, usar el tipo explícito.
+- No usar `this.` salvo que sea necesario para desambiguar o para invocar extension methods que lo requieran.
+- No dejar bloques `catch` vacíos. Como mínimo, registrar la excepción, propagarla o justificar explícitamente por qué se ignora.
+
+### Documentación XML de métodos
+
+Los métodos medianos, grandes o con complejidad considerable deben incluir documentación XML con `/// <summary>`. Los métodos pequeños y evidentes no deben recibir documentación XML innecesaria solo por aplicar esta regla.
+
+Si un método se mueve o reordena y ya tiene documentación XML, esa documentación forma parte del método y debe moverse junto con él. No se debe separar, borrar ni dejar atrás el `summary` al reorganizar métodos.
+
+Toda documentación XML existente debe revisarse para garantizar que sigue reflejando el comportamiento actual del método. El `summary` debe explicar de forma clara y resumida qué hace el método. Cuando el método tenga parámetros, cada parámetro debe documentarse con `/// <param name="...">`. Cuando el método devuelva un valor significativo, debe documentarse con `/// <returns>`. El orden recomendado es: `summary`, después `param` en el mismo orden de la firma del método, y finalmente `returns`.
+
+```csharp
+/// <summary>
+/// Loads the user profile data.
+/// </summary>
+/// <param name="userId">Identifier of the user to load.</param>
+/// <returns>The loaded user profile.</returns>
+public Task<UserProfile> LoadUserProfileAsync(string userId)
+{
+    // ...
+}
+```
+
+### Clases base del proyecto
+
+Si el proyecto define clases base comunes para `Page`, `ViewModel`, `Popup`, `ContentView`, servicios u otros componentes, deben usarse de forma consistente. No introducir una clase base distinta si contradice el patrón existente del proyecto.
+
+### Sufijo `Async` en métodos que devuelven tareas
+
+Los métodos que devuelvan `Task`, `Task<T>`, `ValueTask` o `ValueTask<T>` deben tener siempre el sufijo **`Async`** al final de su nombre, aunque no estén marcados con el modificador `async`.
+
 ### 1. Namespace con file-scoped declaration
 
 La primera línea del archivo será el `namespace`, usando la sintaxis **file-scoped** (sin llaves `{}`). El resto del código no se encapsula dentro del namespace.
@@ -1016,39 +1089,6 @@ Después de todas las propiedades se escriben los **métodos**. Se ordenan por n
     {
         // ...
     }
-```
-
-### 12. Sufijo `Async` en métodos que devuelven tareas
-
-Los métodos que devuelvan `Task`, `Task<T>`, `ValueTask` o `ValueTask<T>` deben tener siempre el sufijo **`Async`** al final de su nombre, aunque no estén marcados con el modificador `async`.
-
-```csharp
-// Correct
-public async Task LoadDataAsync()
-{
-    // ...
-}
-
-public Task RefreshDataAsync()
-{
-    return dataService.RefreshDataAsync();
-}
-
-private async Task<bool> ValidateInputAsync()
-{
-    // ...
-}
-
-// Incorrect (missing Async suffix)
-public async Task LoadData()
-{
-    // ...
-}
-
-private async Task<bool> ValidateInput()
-{
-    // ...
-}
 ```
 
 ### Ejemplo completo
