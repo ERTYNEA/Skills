@@ -11,10 +11,6 @@
 
 Todo el código debe escribirse **siempre en inglés**: nombres de clases, propiedades, métodos, variables, comentarios, etc. Independientemente del tipo de archivo o del idioma del proyecto.
 
-### Comentarios actualizados y concisos
-
-Todos los comentarios deben revisarse para garantizar que siguen describiendo el estado actual del código. Si una refactorización, cambio de flujo o ajuste funcional deja un comentario desactualizado, el comentario debe actualizarse. Los comentarios deben estar escritos en inglés, ser breves y aportar contexto útil sin repetir de forma evidente lo que ya expresa el código.
-
 ### Indentación
 
 La indentación se hará con **tabuladores** (`tab`) y ancho visual de 4 espacios en todos los tipos de archivo del proyecto.
@@ -43,21 +39,21 @@ La primera propiedad de un elemento XAML debe escribirse **en la misma línea** 
 ```xml
 <!-- Correct -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    x:Class="MyApp.MainPage">
+	x:Class="MyApp.MainPage">
 
 <!-- Correct -->
 <controls:LabelControl x:Name="LblTitle"
-    Text="{Binding Title}" />
+	Text="{Binding Title}" />
 
 <!-- Incorrect (first property on a new line) -->
 <ContentPage
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    x:Class="MyApp.MainPage">
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	x:Class="MyApp.MainPage">
 
 <!-- Incorrect (first property on a new line) -->
 <controls:LabelControl
-    x:Name="LblTitle"
-    Text="{Binding Title}" />
+	x:Name="LblTitle"
+	Text="{Binding Title}" />
 ```
 
 ### 3. Orden de propiedades en el elemento raíz
@@ -72,17 +68,17 @@ Cada bloque se trata como independiente para la ordenación.
 ```xml
 <!-- Correct -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:local="clr-namespace:MyApp"
-    xmlns:viewmodels="clr-namespace:MyApp.ViewModels"
-    x:Class="MyApp.MainPage"
-    x:Name="Root">
+	xmlns:local="clr-namespace:MyApp"
+	xmlns:viewmodels="clr-namespace:MyApp.ViewModels"
+	x:Class="MyApp.MainPage"
+	x:Name="Root">
 
 <!-- Incorrect (unordered, x: mixed with xmlns:) -->
 <ContentPage xmlns:viewmodels="clr-namespace:MyApp.ViewModels"
-    x:Class="MyApp.MainPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:local="clr-namespace:MyApp"
-    x:Name="Root">
+	x:Class="MyApp.MainPage"
+	xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+	xmlns:local="clr-namespace:MyApp"
+	x:Name="Root">
 ```
 
 ### 4. Eliminar espacios de nombres no utilizados
@@ -92,12 +88,12 @@ Toda declaración `xmlns:` que no se esté utilizando en el cuerpo del archivo X
 ```xml
 <!-- If "toolkit" is not used anywhere in the XAML, remove its declaration -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-    x:Class="MyApp.MainPage">
+	xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+	x:Class="MyApp.MainPage">
 
 <!-- Only declare what is used -->
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    x:Class="MyApp.MainPage">
+	x:Class="MyApp.MainPage">
 ```
 
 ### 5. Separación entre elementos con líneas en blanco
@@ -107,38 +103,38 @@ Cada elemento hijo debe tener **una línea en blanco antes y después** para mej
 ```xml
 <!-- Correct -->
 <Grid>
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="Auto" />
-    </Grid.ColumnDefinitions>
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition Width="Auto" />
+		<ColumnDefinition Width="Auto" />
+	</Grid.ColumnDefinitions>
 
-    <controls:ImageControl />
+	<controls:ImageControl />
 
-    <controls:LabelControl Grid.Column="1" />
+	<controls:LabelControl Grid.Column="1" />
 
 </Grid>
 
 <!-- Incorrect (no separation between elements) -->
 <Grid>
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="Auto" />
-    </Grid.ColumnDefinitions>
-    <controls:ImageControl />
-    <controls:LabelControl Grid.Column="1" />
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition Width="Auto" />
+		<ColumnDefinition Width="Auto" />
+	</Grid.ColumnDefinitions>
+	<controls:ImageControl />
+	<controls:LabelControl Grid.Column="1" />
 </Grid>
 
 <!-- Incorrect (blank line between element and its attached properties) -->
 <Grid>
 
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="Auto" />
-    </Grid.ColumnDefinitions>
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition Width="Auto" />
+		<ColumnDefinition Width="Auto" />
+	</Grid.ColumnDefinitions>
 
-    <controls:ImageControl />
+	<controls:ImageControl />
 
-    <controls:LabelControl Grid.Column="1" />
+	<controls:LabelControl Grid.Column="1" />
 
 </Grid>
 ```
@@ -150,12 +146,12 @@ Cada elemento hijo debe tener **una línea en blanco antes y después** para mej
 ```xml
 <!-- Correct -->
 <controls:LabelControl>
-    <controls:LabelControl.FormattedText>
-        <FormattedString>
-            <controls:SpanControl />
-            <controls:SpanControl />
-        </FormattedString>
-    </controls:LabelControl.FormattedText>
+	<controls:LabelControl.FormattedText>
+		<FormattedString>
+			<controls:SpanControl />
+			<controls:SpanControl />
+		</FormattedString>
+	</controls:LabelControl.FormattedText>
 </controls:LabelControl>
 ```
 
@@ -164,11 +160,11 @@ Cada elemento hijo debe tener **una línea en blanco antes y después** para mej
 ```xml
 <!-- Correct -->
 <VerticalStackLayout>
-    <BindableLayout.ItemTemplate>
-        <DataTemplate>
-            <cells:Cell />
-        </DataTemplate>
-    </BindableLayout.ItemTemplate>
+	<BindableLayout.ItemTemplate>
+		<DataTemplate>
+			<cells:Cell />
+		</DataTemplate>
+	</BindableLayout.ItemTemplate>
 </VerticalStackLayout>
 ```
 
@@ -247,27 +243,27 @@ Las propiedades de un elemento deben organizarse en **grupos**, siguiendo este o
 ```xml
 <!-- Correct -->
 <controls:LabelControl x:Name="LblTitle" Style="{StaticResource TitleStyle}"
-    Grid.Row="1" Grid.Column="0"
-    IsVisible="{Binding IsVisible}"
-    Text="{Binding Title}" FontSize="18" TextColor="White"
-    HeightRequest="40" WidthRequest="200"
-    Margin="8,0"
-    HorizontalOptions="Start" VerticalOptions="Center" />
+	Grid.Row="1" Grid.Column="0"
+	IsVisible="{Binding IsVisible}"
+	Text="{Binding Title}" FontSize="18" TextColor="White"
+	HeightRequest="40" WidthRequest="200"
+	Margin="8,0"
+	HorizontalOptions="Start" VerticalOptions="Center" />
 
 <!-- Correct -->
 <Image x:Name="ImgIcon"
-    Grid.Row="0"
-    Source="icon.png"
-    WidthRequest="24" />
+	Grid.Row="0"
+	Source="icon.png"
+	WidthRequest="24" />
 
 <!-- Incorrect (disordered properties) -->
 <controls:LabelControl Margin="8,0"
-    Text="{Binding Title}"
-    x:Name="LblTitle"
-    Grid.Row="1"
-    VerticalOptions="Center"
-    Style="{StaticResource TitleStyle}"
-    IsVisible="{Binding IsVisible}" />
+	Text="{Binding Title}"
+	x:Name="LblTitle"
+	Grid.Row="1"
+	VerticalOptions="Center"
+	Style="{StaticResource TitleStyle}"
+	IsVisible="{Binding IsVisible}" />
 ```
 
 ### 9. Declarar explícitamente `Grid.Row` y `Grid.Column` desde 0
@@ -277,39 +273,39 @@ Cuando un `Grid` tiene `RowDefinitions`, todos sus elementos hijos deben declara
 ```xml
 <!-- Correct -->
 <Grid>
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="*" />
-    </Grid.ColumnDefinitions>
+	<Grid.RowDefinitions>
+		<RowDefinition Height="Auto" />
+		<RowDefinition Height="*" />
+	</Grid.RowDefinitions>
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition Width="Auto" />
+		<ColumnDefinition Width="*" />
+	</Grid.ColumnDefinitions>
 
-    <controls:ImageControl Grid.Row="0" Grid.Column="0" />
+	<controls:ImageControl Grid.Row="0" Grid.Column="0" />
 
-    <controls:LabelControl Grid.Row="0" Grid.Column="1" />
+	<controls:LabelControl Grid.Row="0" Grid.Column="1" />
 
-    <controls:ButtonControl Grid.Row="1" Grid.Column="0" />
+	<controls:ButtonControl Grid.Row="1" Grid.Column="0" />
 
 </Grid>
 
 <!-- Incorrect (missing Grid.Row="0" and Grid.Column="0") -->
 <Grid>
-    <Grid.RowDefinitions>
-        <RowDefinition Height="Auto" />
-        <RowDefinition Height="*" />
-    </Grid.RowDefinitions>
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="Auto" />
-        <ColumnDefinition Width="*" />
-    </Grid.ColumnDefinitions>
+	<Grid.RowDefinitions>
+		<RowDefinition Height="Auto" />
+		<RowDefinition Height="*" />
+	</Grid.RowDefinitions>
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition Width="Auto" />
+		<ColumnDefinition Width="*" />
+	</Grid.ColumnDefinitions>
 
-    <controls:ImageControl />
+	<controls:ImageControl />
 
-    <controls:LabelControl Grid.Column="1" />
+	<controls:LabelControl Grid.Column="1" />
 
-    <controls:ButtonControl Grid.Row="1" />
+	<controls:ButtonControl Grid.Row="1" />
 
 </Grid>
 ```
@@ -332,33 +328,9 @@ Cuando un `Grid` tiene `RowDefinitions`, todos sus elementos hijos deben declara
 - No usar `this.` salvo que sea necesario para desambiguar o para invocar extension methods que lo requieran.
 - No dejar bloques `catch` vacíos. Como mínimo, registrar la excepción, propagarla o justificar explícitamente por qué se ignora.
 
-### Documentación XML de métodos
-
-Los métodos medianos, grandes o con complejidad considerable deben incluir documentación XML con `/// <summary>`. Los métodos pequeños y evidentes no deben recibir documentación XML innecesaria solo por aplicar esta regla.
-
-Si un método se mueve o reordena y ya tiene documentación XML, esa documentación forma parte del método y debe moverse junto con él. No se debe separar, borrar ni dejar atrás el `summary` al reorganizar métodos.
-
-Toda documentación XML existente debe revisarse para garantizar que sigue reflejando el comportamiento actual del método. El `summary` debe explicar de forma clara y resumida qué hace el método. Cuando el método tenga parámetros, cada parámetro debe documentarse con `/// <param name="...">`. Cuando el método devuelva un valor significativo, debe documentarse con `/// <returns>`. El orden recomendado es: `summary`, después `param` en el mismo orden de la firma del método, y finalmente `returns`.
-
-```csharp
-/// <summary>
-/// Loads the user profile data.
-/// </summary>
-/// <param name="userId">Identifier of the user to load.</param>
-/// <returns>The loaded user profile.</returns>
-public Task<UserProfile> LoadUserProfileAsync(string userId)
-{
-    // ...
-}
-```
-
 ### Clases base del proyecto
 
 Si el proyecto define clases base comunes para `Page`, `ViewModel`, `Popup`, `ContentView`, servicios u otros componentes, deben usarse de forma consistente. No introducir una clase base distinta si contradice el patrón existente del proyecto.
-
-### Sufijo `Async` en métodos que devuelven tareas
-
-Los métodos que devuelvan `Task`, `Task<T>`, `ValueTask` o `ValueTask<T>` deben tener siempre el sufijo **`Async`** al final de su nombre, aunque no estén marcados con el modificador `async`.
 
 ### 1. Namespace con file-scoped declaration
 
@@ -371,7 +343,7 @@ namespace App.UI.Controls;
 // Incorrect (block-scoped)
 namespace App.UI.Controls
 {
-    // ...
+	// ...
 }
 ```
 
@@ -409,7 +381,7 @@ using App.Core.Interfaces;
 
 public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
 {
-    // ...
+	// ...
 }
 ```
 
@@ -426,65 +398,65 @@ Los bloques `try`, `catch` y `finally` **siempre deben mantener llaves**, aunque
 ```csharp
 // Correct
 if (isValid)
-    SaveData();
+	SaveData();
 else if (isPending)
-    QueueData();
+	QueueData();
 else
-    ClearData();
+	ClearData();
 
 for (var index = 0; index < items.Count; index++)
-    ProcessItem(items[index]);
+	ProcessItem(items[index]);
 
 foreach (var item in items)
-    ProcessItem(item);
+	ProcessItem(item);
 
 while (reader.Read())
-    ProcessRow(reader);
+	ProcessRow(reader);
 
 do
-    retryCount++;
+	retryCount++;
 while (ShouldRetry(retryCount));
 
 // Incorrect (single instruction with braces)
 if (isValid)
 {
-    SaveData();
+	SaveData();
 }
 else if (isPending)
 {
-    QueueData();
+	QueueData();
 }
 else
 {
-    ClearData();
+	ClearData();
 }
 
 foreach (var item in items)
 {
-    ProcessItem(item);
+	ProcessItem(item);
 }
 
 // Correct (try/catch/finally always keep braces)
 try
 {
-    SaveData();
+	SaveData();
 }
 catch (Exception exception)
 {
-    LogError(exception);
+	LogError(exception);
 }
 finally
 {
-    StopLoading();
+	StopLoading();
 }
 
 // Incorrect (try/catch/finally without braces)
 try
-    SaveData();
+	SaveData();
 catch (Exception exception)
-    LogError(exception);
+	LogError(exception);
 finally
-    StopLoading();
+	StopLoading();
 ```
 
 ### 5. Orden del contenido de una clase
@@ -514,22 +486,22 @@ El nombre de cada propiedad de interfaz se forma a partir del nombre de la inter
 ```csharp
 public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
 {
-    // ...properties...
+	// ...properties...
 
-    private IAuthService authService;
-    private INavigationService navigationService;
+	private IAuthService authService;
+	private INavigationService navigationService;
 
-    public UserCardControl(
-        IAuthService authService,
-        INavigationService navigationService)
-    {
-        this.authService = authService;
-        this.navigationService = navigationService;
+	public UserCardControl(
+		IAuthService authService,
+		INavigationService navigationService)
+	{
+		this.authService = authService;
+		this.navigationService = navigationService;
 
-        InitializeComponent();
-    }
+		InitializeComponent();
+	}
 
-    // ...
+	// ...
 }
 ```
 
@@ -538,19 +510,19 @@ public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
 Si la clase tiene destructor, este se escribe **inmediatamente después del constructor**.
 
 ```csharp
-    public UserCardControl(INavigationService navigationService)
-    {
-        this.navigationService = navigationService;
+	public UserCardControl(INavigationService navigationService)
+	{
+		this.navigationService = navigationService;
 
-        InitializeComponent();
-    }
+		InitializeComponent();
+	}
 
-    ~UserCardControl()
-    {
-        // ... cleanup
-    }
+	~UserCardControl()
+	{
+		// ... cleanup
+	}
 
-    // ...
+	// ...
 ```
 
 ### 8. Get/Set de BindableProperty y OnPropertyChanged
@@ -565,37 +537,37 @@ A continuación, si existen `BindableProperty`, se instancia o sobreescribe el m
 - Se deben **eliminar** las entradas de propiedades que no estén en uso.
 
 ```csharp
-    // BindableProperty get/set (same order as declared)
-    public ICommand? Command
-    {
-        get => (ICommand?)GetValue(CommandProperty);
-        set => SetValue(CommandProperty, value);
-    }
+	// BindableProperty get/set (same order as declared)
+	public ICommand? Command
+	{
+		get => (ICommand?)GetValue(CommandProperty);
+		set => SetValue(CommandProperty, value);
+	}
 
-    public bool IsActive
-    {
-        get => (bool)GetValue(IsActiveProperty);
-        set => SetValue(IsActiveProperty, value);
-    }
+	public bool IsActive
+	{
+		get => (bool)GetValue(IsActiveProperty);
+		set => SetValue(IsActiveProperty, value);
+	}
 
-    public string? Text
-    {
-        get => (string?)GetValue(TextProperty);
-        set => SetValue(TextProperty, value);
-    }
+	public string? Text
+	{
+		get => (string?)GetValue(TextProperty);
+		set => SetValue(TextProperty, value);
+	}
 
-    // OnPropertyChanged (same order as BindableProperty declarations)
-    protected override void OnPropertyChanged(string propertyName = null)
-    {
-        base.OnPropertyChanged(propertyName);
+	// OnPropertyChanged (same order as BindableProperty declarations)
+	protected override void OnPropertyChanged(string propertyName = null)
+	{
+		base.OnPropertyChanged(propertyName);
 
-        if (propertyName == CommandProperty.PropertyName)
-            CommandPropertyChanged();
-        else if (propertyName == IsActiveProperty.PropertyName)
-            BtnMain.IsEnabled = IsActive;
-        else if (propertyName == TextProperty.PropertyName)
-            LblMain.Text = Text;
-    }
+		if (propertyName == CommandProperty.PropertyName)
+			CommandPropertyChanged();
+		else if (propertyName == IsActiveProperty.PropertyName)
+			BtnMain.IsEnabled = IsActive;
+		else if (propertyName == TextProperty.PropertyName)
+			LblMain.Text = Text;
+	}
 ```
 
 ### 9. OnActivated
@@ -612,30 +584,30 @@ Los bindings se organizan en **familias independientes**, en este orden:
 Dentro de cada familia, los bindings se ordenan **alfabéticamente por la propiedad del ViewModel** a la que están vinculados.
 
 ```csharp
-    protected override void OnActivated(CompositeDisposable disposables)
-    {
-        base.OnActivated(disposables);
+	protected override void OnActivated(CompositeDisposable disposables)
+	{
+		base.OnActivated(disposables);
 
-        // OneWayBind
-        disposables.Add(this.OneWayBind(ViewModel, vm => vm.Icon, v => v.ImgIcon.Source));
-        disposables.Add(this.OneWayBind(ViewModel, vm => vm.Title, v => v.LblTitle.Text));
+		// OneWayBind
+		disposables.Add(this.OneWayBind(ViewModel, vm => vm.Icon, v => v.ImgIcon.Source));
+		disposables.Add(this.OneWayBind(ViewModel, vm => vm.Title, v => v.LblTitle.Text));
 
-        // Bind
-        disposables.Add(this.Bind(ViewModel, vm => vm.IsEditing, v => v.TxtName.IsEnabled));
-        disposables.Add(this.Bind(ViewModel, vm => vm.UserName, v => v.TxtName.Text));
+		// Bind
+		disposables.Add(this.Bind(ViewModel, vm => vm.IsEditing, v => v.TxtName.IsEnabled));
+		disposables.Add(this.Bind(ViewModel, vm => vm.UserName, v => v.TxtName.Text));
 
-        // Subscribe
-        disposables.Add(ViewModel.WhenAnyValue(vm => vm.Items)
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(ItemsSubscribe));
-        disposables.Add(ViewModel.WhenAnyValue(vm => vm.Status)
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(status => LblStatus.Text = status));
+		// Subscribe
+		disposables.Add(ViewModel.WhenAnyValue(vm => vm.Items)
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Subscribe(ItemsSubscribe));
+		disposables.Add(ViewModel.WhenAnyValue(vm => vm.Status)
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Subscribe(status => LblStatus.Text = status));
 
-        // BindCommand
-        disposables.Add(this.BindCommand(ViewModel, vm => vm.DeleteCommand, v => v.BtnDelete));
-        disposables.Add(this.BindCommand(ViewModel, vm => vm.SaveCommand, v => v.BtnSave));
-    }
+		// BindCommand
+		disposables.Add(this.BindCommand(ViewModel, vm => vm.DeleteCommand, v => v.BtnDelete));
+		disposables.Add(this.BindCommand(ViewModel, vm => vm.SaveCommand, v => v.BtnSave));
+	}
 ```
 
 ### 10. Métodos
@@ -643,19 +615,23 @@ Dentro de cada familia, los bindings se ordenan **alfabéticamente por la propie
 Después de `OnActivated` se escriben los **métodos**. Se ordenan por nivel de acceso (de menos restrictivo a más restrictivo) y **alfabéticamente** dentro de cada grupo.
 
 ```csharp
-    private void CommandPropertyChanged()
-    {
-        BtnMain.Command = Command;
-        BtnMain.IsEnabled = Command != null;
-    }
+	private void CommandPropertyChanged()
+	{
+		BtnMain.Command = Command;
+		BtnMain.IsEnabled = Command != null;
+	}
 
-    private void ItemsSubscribe(IEnumerable<string> items)
-    {
-        StackItems.Children.Clear();
-        foreach (var item in items)
-            StackItems.Children.Add(new Label { Text = item });
-    }
+	private void ItemsSubscribe(IEnumerable<string> items)
+	{
+		StackItems.Children.Clear();
+		foreach (var item in items)
+			StackItems.Children.Add(new Label { Text = item });
+	}
 ```
+
+### 11. Sufijo `Async` en métodos que devuelven tareas
+
+Los métodos que devuelvan `Task`, `Task<T>`, `ValueTask` o `ValueTask<T>` deben tener siempre el sufijo **`Async`** al final de su nombre, aunque no estén marcados con el modificador `async`.
 
 ### Ejemplo completo
 
@@ -671,112 +647,112 @@ using System.Windows.Input;
 
 public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
 {
-    // BindableProperty
-    public static readonly BindableProperty CommandProperty =
-        BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(UserCardControl));
-    public static readonly BindableProperty IsActiveProperty =
-        BindableProperty.Create(nameof(IsActive), typeof(bool), typeof(UserCardControl));
-    public static readonly BindableProperty TextProperty =
-        BindableProperty.Create(nameof(Text), typeof(string), typeof(UserCardControl));
+	// BindableProperty
+	public static readonly BindableProperty CommandProperty =
+		BindableProperty.Create(nameof(Command), typeof(ICommand), typeof(UserCardControl));
+	public static readonly BindableProperty IsActiveProperty =
+		BindableProperty.Create(nameof(IsActive), typeof(bool), typeof(UserCardControl));
+	public static readonly BindableProperty TextProperty =
+		BindableProperty.Create(nameof(Text), typeof(string), typeof(UserCardControl));
 
-    // Interface properties
-    private IAuthService authService;
-    private INavigationService navigationService;
+	// Interface properties
+	private IAuthService authService;
+	private INavigationService navigationService;
 
-    // Other properties
-    private bool isInitialized;
+	// Other properties
+	private bool isInitialized;
 
-    // ResourceDictionary
-    private ResourceDictionary mainResources;
+	// ResourceDictionary
+	private ResourceDictionary mainResources;
 
-    // Constructor
-    public UserCardControl(
-        IAuthService authService,
-        INavigationService navigationService)
-    {
-        this.authService = authService;
-        this.navigationService = navigationService;
+	// Constructor
+	public UserCardControl(
+		IAuthService authService,
+		INavigationService navigationService)
+	{
+		this.authService = authService;
+		this.navigationService = navigationService;
 
-        InitializeComponent();
-    }
+		InitializeComponent();
+	}
 
-    // Destructor
-    ~UserCardControl()
-    {
-        // ... cleanup
-    }
+	// Destructor
+	~UserCardControl()
+	{
+		// ... cleanup
+	}
 
-    // BindableProperty get/set
-    public ICommand? Command
-    {
-        get => (ICommand?)GetValue(CommandProperty);
-        set => SetValue(CommandProperty, value);
-    }
+	// BindableProperty get/set
+	public ICommand? Command
+	{
+		get => (ICommand?)GetValue(CommandProperty);
+		set => SetValue(CommandProperty, value);
+	}
 
-    public bool IsActive
-    {
-        get => (bool)GetValue(IsActiveProperty);
-        set => SetValue(IsActiveProperty, value);
-    }
+	public bool IsActive
+	{
+		get => (bool)GetValue(IsActiveProperty);
+		set => SetValue(IsActiveProperty, value);
+	}
 
-    public string? Text
-    {
-        get => (string?)GetValue(TextProperty);
-        set => SetValue(TextProperty, value);
-    }
+	public string? Text
+	{
+		get => (string?)GetValue(TextProperty);
+		set => SetValue(TextProperty, value);
+	}
 
-    // OnPropertyChanged
-    protected override void OnPropertyChanged(string propertyName = null)
-    {
-        base.OnPropertyChanged(propertyName);
+	// OnPropertyChanged
+	protected override void OnPropertyChanged(string propertyName = null)
+	{
+		base.OnPropertyChanged(propertyName);
 
-        if (propertyName == CommandProperty.PropertyName)
-            CommandPropertyChanged();
-        else if (propertyName == IsActiveProperty.PropertyName)
-            BtnMain.IsEnabled = IsActive;
-        else if (propertyName == TextProperty.PropertyName)
-            LblMain.Text = Text;
-    }
+		if (propertyName == CommandProperty.PropertyName)
+			CommandPropertyChanged();
+		else if (propertyName == IsActiveProperty.PropertyName)
+			BtnMain.IsEnabled = IsActive;
+		else if (propertyName == TextProperty.PropertyName)
+			LblMain.Text = Text;
+	}
 
-    // OnActivated
-    protected override void OnActivated(CompositeDisposable disposables)
-    {
-        base.OnActivated(disposables);
+	// OnActivated
+	protected override void OnActivated(CompositeDisposable disposables)
+	{
+		base.OnActivated(disposables);
 
-        // OneWayBind
-        disposables.Add(this.OneWayBind(ViewModel, vm => vm.Icon, v => v.ImgIcon.Source));
-        disposables.Add(this.OneWayBind(ViewModel, vm => vm.Title, v => v.LblTitle.Text));
+		// OneWayBind
+		disposables.Add(this.OneWayBind(ViewModel, vm => vm.Icon, v => v.ImgIcon.Source));
+		disposables.Add(this.OneWayBind(ViewModel, vm => vm.Title, v => v.LblTitle.Text));
 
-        // Bind
-        disposables.Add(this.Bind(ViewModel, vm => vm.IsEditing, v => v.TxtName.IsEnabled));
-        disposables.Add(this.Bind(ViewModel, vm => vm.UserName, v => v.TxtName.Text));
+		// Bind
+		disposables.Add(this.Bind(ViewModel, vm => vm.IsEditing, v => v.TxtName.IsEnabled));
+		disposables.Add(this.Bind(ViewModel, vm => vm.UserName, v => v.TxtName.Text));
 
-        // Subscribe
-        disposables.Add(ViewModel.WhenAnyValue(vm => vm.Items)
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(ItemsSubscribe));
-        disposables.Add(ViewModel.WhenAnyValue(vm => vm.Status)
-            .ObserveOn(RxApp.MainThreadScheduler)
-            .Subscribe(status => LblStatus.Text = status));
+		// Subscribe
+		disposables.Add(ViewModel.WhenAnyValue(vm => vm.Items)
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Subscribe(ItemsSubscribe));
+		disposables.Add(ViewModel.WhenAnyValue(vm => vm.Status)
+			.ObserveOn(RxApp.MainThreadScheduler)
+			.Subscribe(status => LblStatus.Text = status));
 
-        // BindCommand
-        disposables.Add(this.BindCommand(ViewModel, vm => vm.DeleteCommand, v => v.BtnDelete));
-        disposables.Add(this.BindCommand(ViewModel, vm => vm.SaveCommand, v => v.BtnSave));
-    }
+		// BindCommand
+		disposables.Add(this.BindCommand(ViewModel, vm => vm.DeleteCommand, v => v.BtnDelete));
+		disposables.Add(this.BindCommand(ViewModel, vm => vm.SaveCommand, v => v.BtnSave));
+	}
 
-    // Methods
-    private void CommandPropertyChanged()
-    {
-        BtnMain.Command = Command;
-        BtnMain.IsEnabled = Command != null;
-    }
+	// Methods
+	private void CommandPropertyChanged()
+	{
+		BtnMain.Command = Command;
+		BtnMain.IsEnabled = Command != null;
+	}
 
-    private void ItemsSubscribe(IEnumerable<string> items)
-    {
-        StackItems.Children.Clear();
-        foreach (var item in items)
-            StackItems.Children.Add(new Label { Text = item });
-    }
+	private void ItemsSubscribe(IEnumerable<string> items)
+	{
+		StackItems.Children.Clear();
+		foreach (var item in items)
+			StackItems.Children.Add(new Label { Text = item });
+	}
 }
 ```
 
@@ -798,33 +774,9 @@ public partial class UserCardControl : ReactiveContentView<UserCardViewModel>
 - No usar `this.` salvo que sea necesario para desambiguar o para invocar extension methods que lo requieran.
 - No dejar bloques `catch` vacíos. Como mínimo, registrar la excepción, propagarla o justificar explícitamente por qué se ignora.
 
-### Documentación XML de métodos
-
-Los métodos medianos, grandes o con complejidad considerable deben incluir documentación XML con `/// <summary>`. Los métodos pequeños y evidentes no deben recibir documentación XML innecesaria solo por aplicar esta regla.
-
-Si un método se mueve o reordena y ya tiene documentación XML, esa documentación forma parte del método y debe moverse junto con él. No se debe separar, borrar ni dejar atrás el `summary` al reorganizar métodos.
-
-Toda documentación XML existente debe revisarse para garantizar que sigue reflejando el comportamiento actual del método. El `summary` debe explicar de forma clara y resumida qué hace el método. Cuando el método tenga parámetros, cada parámetro debe documentarse con `/// <param name="...">`. Cuando el método devuelva un valor significativo, debe documentarse con `/// <returns>`. El orden recomendado es: `summary`, después `param` en el mismo orden de la firma del método, y finalmente `returns`.
-
-```csharp
-/// <summary>
-/// Loads the user profile data.
-/// </summary>
-/// <param name="userId">Identifier of the user to load.</param>
-/// <returns>The loaded user profile.</returns>
-public Task<UserProfile> LoadUserProfileAsync(string userId)
-{
-    // ...
-}
-```
-
 ### Clases base del proyecto
 
 Si el proyecto define clases base comunes para `Page`, `ViewModel`, `Popup`, `ContentView`, servicios u otros componentes, deben usarse de forma consistente. No introducir una clase base distinta si contradice el patrón existente del proyecto.
-
-### Sufijo `Async` en métodos que devuelven tareas
-
-Los métodos que devuelvan `Task`, `Task<T>`, `ValueTask` o `ValueTask<T>` deben tener siempre el sufijo **`Async`** al final de su nombre, aunque no estén marcados con el modificador `async`.
 
 ### 1. Namespace con file-scoped declaration
 
@@ -837,7 +789,7 @@ namespace App.UI.Features;
 // Incorrect (block-scoped)
 namespace App.UI.Features
 {
-    // ...
+	// ...
 }
 ```
 
@@ -875,7 +827,7 @@ using App.Core.Models;
 
 public partial class UserProfilePage : ContentPage
 {
-    // ...
+	// ...
 }
 ```
 
@@ -892,65 +844,65 @@ Los bloques `try`, `catch` y `finally` **siempre deben mantener llaves**, aunque
 ```csharp
 // Correct
 if (isValid)
-    SaveData();
+	SaveData();
 else if (isPending)
-    QueueData();
+	QueueData();
 else
-    ClearData();
+	ClearData();
 
 for (var index = 0; index < items.Count; index++)
-    ProcessItem(items[index]);
+	ProcessItem(items[index]);
 
 foreach (var item in items)
-    ProcessItem(item);
+	ProcessItem(item);
 
 while (reader.Read())
-    ProcessRow(reader);
+	ProcessRow(reader);
 
 do
-    retryCount++;
+	retryCount++;
 while (ShouldRetry(retryCount));
 
 // Incorrect (single instruction with braces)
 if (isValid)
 {
-    SaveData();
+	SaveData();
 }
 else if (isPending)
 {
-    QueueData();
+	QueueData();
 }
 else
 {
-    ClearData();
+	ClearData();
 }
 
 foreach (var item in items)
 {
-    ProcessItem(item);
+	ProcessItem(item);
 }
 
 // Correct (try/catch/finally always keep braces)
 try
 {
-    SaveData();
+	SaveData();
 }
 catch (Exception exception)
 {
-    LogError(exception);
+	LogError(exception);
 }
 finally
 {
-    StopLoading();
+	StopLoading();
 }
 
 // Incorrect (try/catch/finally without braces)
 try
-    SaveData();
+	SaveData();
 catch (Exception exception)
-    LogError(exception);
+	LogError(exception);
 finally
-    StopLoading();
+	StopLoading();
 ```
 
 ### 5. Orden del contenido de una clase
@@ -974,11 +926,11 @@ Son las primeras que se escriben en la clase. Se declaran al inicio, antes del c
 ```csharp
 public partial class UserProfilePage : ContentPage
 {
-    private IAuthService authService;
-    private ILoggerService loggerService;
-    private INavigationService navigationService;
+	private IAuthService authService;
+	private ILoggerService loggerService;
+	private INavigationService navigationService;
 
-    // ...
+	// ...
 }
 ```
 
@@ -989,23 +941,23 @@ Va inmediatamente después de las propiedades de interfaces. Lo primero que hace
 ```csharp
 public partial class UserProfilePage : ContentPage
 {
-    private IAuthService authService;
-    private ILoggerService loggerService;
-    private INavigationService navigationService;
+	private IAuthService authService;
+	private ILoggerService loggerService;
+	private INavigationService navigationService;
 
-    public UserProfilePage(
-        IAuthService authService,
-        ILoggerService loggerService,
-        INavigationService navigationService)
-    {
-        this.authService = authService;
-        this.loggerService = loggerService;
-        this.navigationService = navigationService;
+	public UserProfilePage(
+		IAuthService authService,
+		ILoggerService loggerService,
+		INavigationService navigationService)
+	{
+		this.authService = authService;
+		this.loggerService = loggerService;
+		this.navigationService = navigationService;
 
-        // ... other initialization
-    }
+		// ... other initialization
+	}
 
-    // ...
+	// ...
 }
 ```
 
@@ -1014,17 +966,17 @@ public partial class UserProfilePage : ContentPage
 Si la clase tiene destructor, este se escribe **inmediatamente después del constructor**.
 
 ```csharp
-    public UserProfilePage(ILoggerService loggerService)
-    {
-        this.loggerService = loggerService;
-    }
+	public UserProfilePage(ILoggerService loggerService)
+	{
+		this.loggerService = loggerService;
+	}
 
-    ~UserProfilePage()
-    {
-        // ... cleanup
-    }
+	~UserProfilePage()
+	{
+		// ... cleanup
+	}
 
-    // ...
+	// ...
 ```
 
 ### 9. Propiedades Reactive y ReactiveCommand
@@ -1032,20 +984,20 @@ Si la clase tiene destructor, este se escribe **inmediatamente después del cons
 Después del destructor (o del constructor si no hay destructor) se escriben las propiedades **Reactive**, seguidas de las propiedades **ReactiveCommand**. Ambos grupos se ordenan por nivel de acceso y alfabéticamente. Los atributos como `[Reactive]` se escriben en una **línea separada**, encima de la propiedad a la que afectan.
 
 ```csharp
-    // Reactive properties
-    [Reactive]
-    public string Email { get; set; }
-    [Reactive]
-    public string UserName { get; set; }
+	// Reactive properties
+	[Reactive]
+	public string Email { get; set; }
+	[Reactive]
+	public string UserName { get; set; }
 
-    [Reactive]
-    private bool isEditing;
+	[Reactive]
+	private bool isEditing;
 
-    // ReactiveCommand properties
-    public ReactiveCommand<Unit, Unit> LoadCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> SaveCommand { get; set; }
+	// ReactiveCommand properties
+	public ReactiveCommand<Unit, Unit> LoadCommand { get; set; }
+	public ReactiveCommand<Unit, Unit> SaveCommand { get; set; }
 
-    private ReactiveCommand<Unit, Unit> validateCommand;
+	private ReactiveCommand<Unit, Unit> validateCommand;
 ```
 
 ### 10. Resto de propiedades
@@ -1053,11 +1005,11 @@ Después del destructor (o del constructor si no hay destructor) se escriben las
 Por último se escriben el resto de propiedades que no encajan en las categorías anteriores, siguiendo la misma ordenación por nivel de acceso y alfabéticamente.
 
 ```csharp
-    public string Title { get; set; }
+	public string Title { get; set; }
 
-    protected int PageIndex { get; set; }
+	protected int PageIndex { get; set; }
 
-    private bool isLoading;
+	private bool isLoading;
 ```
 
 ### 11. Métodos
@@ -1065,31 +1017,35 @@ Por último se escriben el resto de propiedades que no encajan en las categoría
 Después de todas las propiedades se escriben los **métodos**. Se ordenan por nivel de acceso (de menos restrictivo a más restrictivo) y **alfabéticamente** dentro de cada grupo.
 
 ```csharp
-    public void LoadData()
-    {
-        // ...
-    }
+	public void LoadData()
+	{
+		// ...
+	}
 
-    public void SaveData()
-    {
-        // ...
-    }
+	public void SaveData()
+	{
+		// ...
+	}
 
-    protected void OnPropertyChanged()
-    {
-        // ...
-    }
+	protected void OnPropertyChanged()
+	{
+		// ...
+	}
 
-    private void InitializeComponents()
-    {
-        // ...
-    }
+	private void InitializeComponents()
+	{
+		// ...
+	}
 
-    private void ValidateInput()
-    {
-        // ...
-    }
+	private void ValidateInput()
+	{
+		// ...
+	}
 ```
+
+### 12. Sufijo `Async` en métodos que devuelven tareas
+
+Los métodos que devuelvan `Task`, `Task<T>`, `ValueTask` o `ValueTask<T>` deben tener siempre el sufijo **`Async`** al final de su nombre, aunque no estén marcados con el modificador `async`.
 
 ### Ejemplo completo
 
@@ -1103,72 +1059,104 @@ using ReactiveUI;
 
 public partial class UserProfilePage : ContentPage
 {
-    // Interface properties
-    private IAuthService authService;
-    private ILoggerService loggerService;
-    private INavigationService navigationService;
+	// Interface properties
+	private IAuthService authService;
+	private ILoggerService loggerService;
+	private INavigationService navigationService;
 
-    // Constructor
-    public UserProfilePage(
-        IAuthService authService,
-        ILoggerService loggerService,
-        INavigationService navigationService)
-    {
-        this.authService = authService;
-        this.loggerService = loggerService;
-        this.navigationService = navigationService;
-    }
+	// Constructor
+	public UserProfilePage(
+		IAuthService authService,
+		ILoggerService loggerService,
+		INavigationService navigationService)
+	{
+		this.authService = authService;
+		this.loggerService = loggerService;
+		this.navigationService = navigationService;
+	}
 
-    // Destructor
-    ~UserProfilePage()
-    {
-        // ... cleanup
-    }
+	// Destructor
+	~UserProfilePage()
+	{
+		// ... cleanup
+	}
 
-    // Reactive properties
-    [Reactive]
-    public string Email { get; set; }
-    [Reactive]
-    public string UserName { get; set; }
+	// Reactive properties
+	[Reactive]
+	public string Email { get; set; }
+	[Reactive]
+	public string UserName { get; set; }
 
-    [Reactive]
-    private bool isEditing;
+	[Reactive]
+	private bool isEditing;
 
-    // ReactiveCommand properties
-    public ReactiveCommand<Unit, Unit> LoadCommand { get; set; }
-    public ReactiveCommand<Unit, Unit> SaveCommand { get; set; }
+	// ReactiveCommand properties
+	public ReactiveCommand<Unit, Unit> LoadCommand { get; set; }
+	public ReactiveCommand<Unit, Unit> SaveCommand { get; set; }
 
-    // Other properties
-    public string Title { get; set; }
+	// Other properties
+	public string Title { get; set; }
 
-    protected int PageIndex { get; set; }
+	protected int PageIndex { get; set; }
 
-    private bool isLoading;
+	private bool isLoading;
 
-    // Methods
-    public void LoadData()
-    {
-        // ...
-    }
+	// Methods
+	public void LoadData()
+	{
+		// ...
+	}
 
-    public void SaveData()
-    {
-        // ...
-    }
+	public void SaveData()
+	{
+		// ...
+	}
 
-    protected void OnPropertyChanged()
-    {
-        // ...
-    }
+	protected void OnPropertyChanged()
+	{
+		// ...
+	}
 
-    private void InitializeComponents()
-    {
-        // ...
-    }
+	private void InitializeComponents()
+	{
+		// ...
+	}
 
-    private void ValidateInput()
-    {
-        // ...
-    }
+	private void ValidateInput()
+	{
+		// ...
+	}
+}
+```
+
+---
+
+## Revisión final
+
+Estas comprobaciones deben ejecutarse al final, después de aplicar las reglas de estructura, formato, ordenación y refactorización anteriores.
+
+### Comentarios actualizados y concisos
+
+Todos los comentarios deben revisarse para garantizar que siguen describiendo el estado actual del código. Si una refactorización, cambio de flujo o ajuste funcional deja un comentario desactualizado, el comentario debe actualizarse. Los comentarios deben estar escritos en inglés, ser breves y aportar contexto útil sin repetir de forma evidente lo que ya expresa el código.
+
+### Documentación XML de métodos
+
+Esta revisión aplica a archivos `.xaml.cs` y `.cs`.
+
+Los métodos medianos, grandes o con complejidad considerable deben incluir documentación XML con `/// <summary>`. Los métodos pequeños y evidentes no deben recibir documentación XML innecesaria solo por aplicar esta regla.
+
+Si un método se mueve o reordena y ya tiene documentación XML, esa documentación forma parte del método y debe moverse junto con él. No se debe separar, borrar ni dejar atrás el `summary` al reorganizar métodos.
+
+Toda documentación XML existente debe revisarse para garantizar que sigue reflejando el comportamiento actual del método. El `summary` debe explicar de forma clara y resumida qué hace el método. Cuando el método tenga parámetros, cada parámetro debe documentarse con `/// <param name="...">`. Cuando el método devuelva un valor significativo, debe documentarse con `/// <returns>`. El orden recomendado es: `summary`, después `param` en el mismo orden de la firma del método, y finalmente `returns`.
+
+```csharp
+/// <summary>
+/// Loads the user profile data.
+/// </summary>
+/// <param name="userId">Identifier of the user to load.</param>
+/// <returns>The loaded user profile.</returns>
+public Task<UserProfile> LoadUserProfileAsync(string userId)
+{
+	// ...
 }
 ```
